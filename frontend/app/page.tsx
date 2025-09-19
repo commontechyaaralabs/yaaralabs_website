@@ -338,14 +338,21 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#010101' }}>
-      {/* Three.js Shader Background */}
-      <div className="banner fixed inset-0 flex flex-col items-center justify-center text-center z-0 overflow-hidden bg-black" style={{ minHeight: '100vh' }}>
+      {/* Three.js Shader Background - Limited to hero section */}
+      <div className="banner absolute inset-0 flex flex-col items-center justify-center text-center z-0 overflow-hidden bg-black" style={{ height: '100vh' }}>
         <div 
           ref={containerRef}
           className="absolute inset-0 w-full h-full bg-black transition-opacity duration-1000"
           style={{ 
-            minHeight: '100vh',
+            height: '100vh',
             opacity: animationOpacity
+          }}
+        />
+        {/* Clean black overlay to cover animation cutoff */}
+        <div 
+          className="absolute inset-0 w-full h-full pointer-events-none black-overlay"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0.9) 90%, rgba(0,0,0,1) 100%)'
           }}
         />
       </div>
@@ -380,7 +387,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <div className="relative z-30 bg-black">
+      <div className="relative z-30 bg-black main-content">
         {/* Product Features */}
         <section id="product-features" className="py-20 px-4">
           <div className="max-w-6xl mx-auto">

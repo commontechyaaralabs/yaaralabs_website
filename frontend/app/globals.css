@@ -45,3 +45,27 @@ body {
 .animate-gradient-move {
   animation: gradient-move 1s ease-in-out infinite;
 }
+
+/* Clean black overlay for seamless transition */
+.black-overlay {
+  z-index: 5;
+}
+
+/* Smooth transition for the main content */
+.main-content {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.8) 40%, #010101 60%, #010101 100%);
+}
+
+/* Additional black background extension */
+.main-content::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
+  z-index: -1;
+}
