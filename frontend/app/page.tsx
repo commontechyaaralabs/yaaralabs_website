@@ -372,7 +372,7 @@ const HomePage: React.FC = () => {
         isLoggedIn={false} 
         onLoginClick={handleLoginClick}
         className={`transition-all duration-1000 ${
-          showTransition ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+          showTransition || !isLoading ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
         }`}
       />
 
