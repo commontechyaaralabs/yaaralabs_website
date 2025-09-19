@@ -103,9 +103,6 @@ const HomePage: React.FC = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animationFrameRef = useRef<number>(0);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [showTransition, setShowTransition] = React.useState(false);
-  const [pageLoadStartTime] = React.useState(Date.now());
 
   const initShaderBackground = () => {
     if (!containerRef.current || !window.THREE) return;
@@ -233,29 +230,11 @@ const HomePage: React.FC = () => {
       router.replace('/home');
       return;
     }
-    
-    // Check if page loading took longer than 500ms (indicating slow connection)
-    const loadTime = Date.now() - pageLoadStartTime;
-    const shouldShowLoading = loadTime > 500;
-    
-    if (shouldShowLoading) {
-      setIsLoading(true);
-      // Start transition after loading is complete
-      const timer = setTimeout(() => {
-        setShowTransition(true);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500); // Transition duration
-      }, 800); // Initial loading time
-      
-      return () => clearTimeout(timer);
-    }
-  }, [session, status, router, pageLoadStartTime]);
+  }, [session, status, router]);
 
   // Initialize Three.js background for non-authenticated users
   useEffect(() => {
     if (session) return; // Don't run if user is authenticated
-    if (isLoading) return; // Don't run while loading
 
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
@@ -272,35 +251,8 @@ const HomePage: React.FC = () => {
         rendererRef.current.dispose();
       }
     };
-  }, [session, isLoading]);
+  }, [session]);
 
-  // Show loading state while checking authentication
-  if (status === "loading" || isLoading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center relative">
-        <div className="text-center">
-          <div className={`w-24 h-24 relative mb-4 mx-auto transition-all duration-1000 ${
-            showTransition ? 'opacity-30 scale-75' : 'opacity-60'
-          }`}>
-            <Image
-              src="/yaaralogo-circle.png"
-              alt="YAARA Logo"
-              fill
-              className="object-contain"
-              priority
-            />
-            {/* Moving gradient overlay */}
-            <div className="absolute inset-0 rounded-full overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-pink-500/30 to-transparent animate-gradient-move"></div>
-            </div>
-          </div>
-          <p className={`text-gray-400 transition-opacity duration-500 ${
-            showTransition ? 'opacity-0' : 'opacity-100'
-          }`}>Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   // If user is authenticated, don't render the landing page
   if (session) {
@@ -367,14 +319,7 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Navigation Bar - Public version without sidebar */}
-      <Header 
-        transparent={true} 
-        isLoggedIn={false} 
-        onLoginClick={handleLoginClick}
-        className={`transition-all duration-1000 ${
-          showTransition || !isLoading ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-        }`}
-      />
+      <Header transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
 
       {/* Hero Section */}
       <section className="relative z-30 h-screen flex items-center px-8">
