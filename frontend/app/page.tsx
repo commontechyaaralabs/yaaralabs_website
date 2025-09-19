@@ -103,8 +103,9 @@ const HomePage: React.FC = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animationFrameRef = useRef<number>(0);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [showTransition, setShowTransition] = React.useState(false);
+  const [pageLoadStartTime] = React.useState(Date.now());
 
   const initShaderBackground = () => {
     if (!containerRef.current || !window.THREE) return;
@@ -233,16 +234,23 @@ const HomePage: React.FC = () => {
       return;
     }
     
-    // Start transition after loading is complete
-    const timer = setTimeout(() => {
-      setShowTransition(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500); // Transition duration
-    }, 800); // Initial loading time
+    // Check if page loading took longer than 500ms (indicating slow connection)
+    const loadTime = Date.now() - pageLoadStartTime;
+    const shouldShowLoading = loadTime > 500;
     
-    return () => clearTimeout(timer);
-  }, [session, status, router]);
+    if (shouldShowLoading) {
+      setIsLoading(true);
+      // Start transition after loading is complete
+      const timer = setTimeout(() => {
+        setShowTransition(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500); // Transition duration
+      }, 800); // Initial loading time
+      
+      return () => clearTimeout(timer);
+    }
+  }, [session, status, router, pageLoadStartTime]);
 
   // Initialize Three.js background for non-authenticated users
   useEffect(() => {
