@@ -172,25 +172,12 @@ const HomePage: React.FC = () => {
       meshes.push(mesh);
     }
 
-    const renderer = new window.THREE.WebGLRenderer({ 
-      antialias: true, 
-      alpha: false,
-      powerPreference: "high-performance"
-    });
+    const renderer = new window.THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 1);
     renderer.setSize(window.innerWidth, window.innerHeight);
     
     container.appendChild(renderer.domElement);
-    
-    // Start with light transparency and gradually reveal
-    container.style.opacity = '0.1';
-    container.style.transition = 'opacity 3s ease-in-out';
-    
-    // Gradually fade in to full visibility
-    setTimeout(() => {
-      container.style.opacity = '1';
-    }, 300);
     
     sceneRef.current = scene;
     rendererRef.current = renderer;
@@ -199,13 +186,11 @@ const HomePage: React.FC = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
       
       const delta = clock.getDelta();
-      uniforms.time.value += delta * 3;
+      uniforms.time.value += delta * 2;
       
-      camera.rotation.x += delta * 0.08;
-      camera.rotation.z += delta * 0.08;
+      camera.rotation.x += delta * 0.05;
+      camera.rotation.z += delta * 0.05;
       
-      // Optimize mesh updates while preserving wave pattern
-      const time = uniforms.time.value;
       meshes.forEach((object, i) => {
         object.rotation.x += 0.02;
         object.rotation.z += 0.02;
@@ -258,15 +243,10 @@ const HomePage: React.FC = () => {
       return;
     }
 
-    // Preload Three.js for faster initialization
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-    script.async = true;
     script.onload = () => {
-      // Small delay to ensure DOM is ready
-      requestAnimationFrame(() => {
-        initShaderBackground();
-      });
+      initShaderBackground();
     };
     document.head.appendChild(script);
 
