@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Brain, Mail, MessageSquare, Ticket, TrendingUp, ArrowRight, Database, Settings, Shield, Zap, Phone, Share2 } from 'lucide-react';
 import {Header} from '@/components/Header/Header';
 import * as THREE from 'three';
@@ -103,6 +103,7 @@ const HomePage: React.FC = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animationFrameRef = useRef<number>(0);
+  const [animationOpacity, setAnimationOpacity] = useState(0);
 
   const initShaderBackground = () => {
     if (!containerRef.current || !window.THREE) return;
@@ -127,11 +128,13 @@ const HomePage: React.FC = () => {
     const geometry = new window.THREE.BoxGeometry(1, cubeSize * 4, 1);
     
     const uniforms = {
-      time: { value: 1.0 }
+      time: { value: 1.0 },
+      opacity: { value: 0.0 }
     };
 
     const fragmentShader = `
       uniform float time;
+      uniform float opacity;
       varying vec2 vUv;
       void main( void ) {
         vec2 position = - 0.0 + 3.0 * vUv;
@@ -143,7 +146,7 @@ const HomePage: React.FC = () => {
         float green = mix(0.2, 0.4, wave2) * wave3;
         float blue = mix(0.7, 0.9, wave3) * wave1;
         
-        gl_FragColor = vec4( red, green, blue, 0.8 );
+        gl_FragColor = vec4( red, green, blue, opacity );
       }
     `;
 
@@ -172,15 +175,34 @@ const HomePage: React.FC = () => {
       meshes.push(mesh);
     }
 
-    const renderer = new window.THREE.WebGLRenderer({ antialias: true, alpha: false });
+    const renderer = new window.THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(0x000000, 1);
+    renderer.setClearColor(0x000000, 0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     
     container.appendChild(renderer.domElement);
     
     sceneRef.current = scene;
     rendererRef.current = renderer;
+
+    // Start fade-in animation
+    const fadeInDuration = 200; // 0.2 seconds - very quick
+    const startTime = Date.now();
+    
+    const fadeIn = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / fadeInDuration, 1);
+      // Use linear progression for fastest reveal
+      const opacity = progress * 0.8; // Max opacity of 0.8 for the shader
+      setAnimationOpacity(opacity);
+      uniforms.opacity.value = opacity;
+      
+      if (progress < 1) {
+        requestAnimationFrame(fadeIn);
+      }
+    };
+    
+    requestAnimationFrame(fadeIn);
 
     const animate = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
@@ -320,8 +342,11 @@ const HomePage: React.FC = () => {
       <div className="banner fixed inset-0 flex flex-col items-center justify-center text-center z-0 overflow-hidden bg-black" style={{ minHeight: '100vh' }}>
         <div 
           ref={containerRef}
-          className="absolute inset-0 w-full h-full bg-black"
-          style={{ minHeight: '100vh' }}
+          className="absolute inset-0 w-full h-full bg-black transition-opacity duration-1000"
+          style={{ 
+            minHeight: '100vh',
+            opacity: animationOpacity
+          }}
         />
       </div>
 
