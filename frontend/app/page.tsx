@@ -21,6 +21,34 @@ interface MetricBoxProps {
   delay: number;
 }
 
+interface ServiceCardProps {
+  title: string;
+  subtitle: string;
+  description: string;
+  features: string[];
+  buttonText: string;
+  delay: number;
+}
+
+interface ExpertiseCardProps {
+  title: string;
+  features: string[];
+  delay: number;
+}
+
+interface AdvantageCardProps {
+  title: string;
+  features: string[];
+  delay: number;
+  isAlternate: boolean;
+}
+
+interface InnovationCardProps {
+  title: string;
+  description: string;
+  delay: number;
+}
+
 const MetricBox: React.FC<MetricBoxProps> = ({ value, label, delay }) => {
   const [isVisible, setIsVisible] = React.useState(false);
   const [animatedValue, setAnimatedValue] = React.useState("0");
@@ -95,6 +123,251 @@ const MetricBox: React.FC<MetricBoxProps> = ({ value, label, delay }) => {
   );
 };
 
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, subtitle, description, features, buttonText, delay }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, delay);
+          }
+        });
+      },
+      { threshold: 0.2 } // Trigger when 20% of the element is visible
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [delay, hasAnimated]);
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700 hover:border-purple-500 transition-all duration-700 hover:scale-105 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      }`}
+      style={{
+        backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)'
+      }}
+    >
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
+          <p className="text-lg text-purple-300 font-medium">{subtitle}</p>
+        </div>
+        
+        <p className="text-gray-300 leading-relaxed">
+          {description}
+        </p>
+        
+        <div className="space-y-3">
+          {features.map((feature, index) => (
+            <div key={index} className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+              <span className="text-gray-300 text-sm">{feature}</span>
+            </div>
+          ))}
+        </div>
+        
+        <button className="w-full bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center justify-center space-x-2">
+          <span>{buttonText}</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const ExpertiseCard: React.FC<ExpertiseCardProps> = ({ title, features, delay }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, delay);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [delay, hasAnimated]);
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`overflow-hidden rounded-xl transition-all duration-700 hover:scale-105 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      <div className="bg-gray-800 p-4">
+        <h3 className="text-lg font-bold text-white">{title}</h3>
+      </div>
+      <div 
+        className="p-6 text-white"
+        style={{
+          background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%)'
+        }}
+      >
+        <div className="space-y-3">
+          {features.map((feature, index) => (
+            <div key={index} className="text-sm leading-relaxed">
+              {feature}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AdvantageCard: React.FC<AdvantageCardProps> = ({ title, features, delay, isAlternate }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, delay);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [delay, hasAnimated]);
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`rounded-xl p-8 transition-all duration-700 hover:scale-105 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      } ${
+        isAlternate 
+          ? 'bg-gradient-to-br from-purple-900 to-blue-900 border border-purple-700' 
+          : 'bg-gray-800 border border-gray-700'
+      }`}
+    >
+      <div className="space-y-6">
+        <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+        
+        <div className="space-y-4">
+          {features.map((feature, index) => (
+            <div key={index} className="flex items-start space-x-3">
+              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                isAlternate ? 'bg-white' : 'bg-purple-400'
+              }`}></div>
+              <span className="text-gray-300 text-sm leading-relaxed">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const InnovationCard: React.FC<InnovationCardProps> = ({ title, description, delay }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, delay);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [delay, hasAnimated]);
+
+  return (
+    <div 
+      ref={cardRef}
+      className={`overflow-hidden rounded-xl transition-all duration-700 hover:scale-105 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      {/* Purple Header */}
+      <div 
+        className="px-8 py-6"
+        style={{
+          background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(59, 130, 246, 0.9) 100%)'
+        }}
+      >
+        <h3 className="text-2xl font-bold text-white">{title}</h3>
+      </div>
+      
+      {/* Dark Gray Body */}
+      <div className="bg-gray-800 px-8 py-8">
+        <p className="text-white leading-relaxed text-left">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const HomePage: React.FC = () => {
   const router = useRouter();
@@ -327,13 +600,160 @@ const HomePage: React.FC = () => {
     }
   ];
 
-  const businessBenefits = [
-    { icon: <Database className="w-6 h-6" />, title: "Cross-Channel Intelligence", description: "Unified analysis across email, chat, ticket, voice, and social media data" },
-    { icon: <Settings className="w-6 h-6" />, title: "Automated Categorization", description: "Efficient routing and prioritization of customer issues" },
-    { icon: <TrendingUp className="w-6 h-6" />, title: "Trend Identification", description: "Early detection of emerging problems and opportunities" },
-    { icon: <Brain className="w-6 h-6" />, title: "Knowledge Discovery", description: "Surface insights missed in manual review processes" },
-    { icon: <Shield className="w-6 h-6" />, title: "Quality Assurance", description: "Human verification ensures reliable outputs" },
-    { icon: <Zap className="w-6 h-6" />, title: "Scalable Processing", description: "Handle growing volumes of customer communications" }
+
+  const serviceCards = [
+    {
+      title: "AI Product Development",
+      subtitle: "Vision To Reality with Expert Engineering",
+      description: "Transform breakthrough ideas into market-ready AI solutions. Our experienced AI teams leverage cutting-edge agentic, machine and deep learning frameworks to build scalable, enterprise-grade products to accelerate innovation cycles and create sustainable competitive advantages.",
+      features: [
+        "Custom AI/ML model development and deployment",
+        "Intelligent automation and workflow optimization",
+        "Agentic AI systems and autonomous decision-making"
+      ],
+      buttonText: "EXPLORE AI DEVELOPMENT"
+    },
+    {
+      title: "Workforce AI Enablement",
+      subtitle: "Building AI-Confident Organizations",
+      description: "Our comprehensive training programs prepare everyone from executives to operations teams to harness AI effectively, ensuring your organization maximizes AI adoption and ROI.",
+      features: [
+        "Executive AI strategy and governance workshops",
+        "Organization-wide AI literacy and adoption programs",
+        "Business leader AI application masterclasses",
+        "Technical team upskilling in AI/ML implementation"
+      ],
+      buttonText: "DISCOVER AI TRAINING"
+    },
+    {
+      title: "AI Strategy Consulting",
+      subtitle: "Navigate Your AI Journey with Expert Guidance",
+      description: "Chart your path to AI transformation with strategic precision. Our senior AI consultants help you identify high-impact opportunities, develop implementation roadmaps, and ensure your AI initiatives deliver measurable business outcomes from day one.",
+      features: [
+        "AI readiness assessment and maturity evaluation",
+        "Strategic roadmap development and prioritization",
+        "Technology architecture design and vendor selection",
+        "ROI optimization and performance measurement"
+      ],
+      buttonText: "GET AI ASSESSMENT"
+    },
+    {
+      title: "AI-Powered Data Annotation Services",
+      subtitle: "Transform Raw Data into AI-Ready Training Sets with Precision and Scale",
+      description: "Accelerate your AI model development with expertly annotated datasets that deliver superior performance. Our advanced hybrid methodology combines cutting-edge AI automation with expert human validation, reducing annotation time by 40% while maintaining enterprise-grade accuracy for your machine learning initiatives.",
+      features: [
+        "40% Faster Turnaround - AI-first annotation with human precision",
+        "99.5% Accuracy Standards - Enterprise-grade quality control protocols",
+        "Scalable Solutions - From prototype datasets to production-scale annotation",
+        "Global Expertise - Multi-industry annotation specialists"
+      ],
+      buttonText: "ACCELERATE AI TRAINING"
+    }
+  ];
+
+  const expertiseCards = [
+    {
+      title: "Machine & Deep Learning",
+      features: [
+        "Advanced neural network architectures",
+        "Computer vision and NLP applications",
+        "Predictive analytics and forecasting"
+      ]
+    },
+    {
+      title: "Generative AI & LLMs",
+      features: [
+        "Custom fine-tuning and deployment",
+        "RAG systems and knowledge bases",
+        "Multimodal AI applications"
+      ]
+    },
+    {
+      title: "Agentic AI Systems",
+      features: [
+        "Autonomous decision-making frameworks",
+        "Intelligent workflow automation",
+        "Multi-agent system architectures"
+      ]
+    },
+    {
+      title: "Enterprise AI Architecture",
+      features: [
+        "Scalable cloud-native or on premises solutions",
+        "ML Ops and model governance",
+        "Security and compliance frameworks"
+      ]
+    },
+    {
+      title: "Industry-Specific AI",
+      features: [
+        "Financial services and fintech",
+        "Healthcare and life sciences",
+        "Manufacturing and supply chain"
+      ]
+    },
+    {
+      title: "AI Strategy & Governance",
+      features: [
+        "Ethical AI framework development",
+        "Risk assessment and mitigation",
+        "Change management and adoption"
+      ]
+    }
+  ];
+
+  const advantageCards = [
+    {
+      title: "Expert Network",
+      features: [
+        "Senior AI Experts and Specialists",
+        "Combined 100+ years of AI experience",
+        "Former leaders from top tech companies",
+        "Continuous research and innovation focus"
+      ]
+    },
+    {
+      title: "Partnership Approach",
+      features: [
+        "Boutique consulting model",
+        "White-glove service delivery",
+        "Long-term strategic relationships",
+        "Transparent communication and collaboration"
+      ]
+    },
+    {
+      title: "Proven Excellence",
+      features: [
+        "Battle-tested methodologies",
+        "Enterprise-grade security standards",
+        "Comprehensive quality assurance",
+        "Risk-mitigation expertise"
+      ]
+    },
+    {
+      title: "Global Outreach",
+      features: [
+        "Multi-timezone support coverage",
+        "Cultural understanding across regions",
+        "Local compliance and regulatory knowledge",
+        "Scalable delivery capabilities"
+      ]
+    }
+  ];
+
+  const innovationCards = [
+    {
+      title: "Next-Generation Product Development",
+      description: "Advancing AI-powered product capabilities for technology leaders, implementing cutting-edge machine learning frameworks to accelerate time-to-market and create sustainable competitive advantages."
+    },
+    {
+      title: "Enterprise AI Transformation",
+      description: "Guiding Fortune 1000 organizations through comprehensive AI adoption, from strategic planning to workforce enablement, ensuring successful integration across business functions."
+    },
+    {
+      title: "Strategic AI Implementation",
+      description: "Partnering with industry pioneers to develop custom AI solutions that redefine operational efficiency, customer experience, and business model innovation."
+    }
   ];
 
   return (
@@ -398,7 +818,7 @@ const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="grid md:grid-cols-3 gap-8 mb-0">
               <MetricBox 
                 value="+102%" 
                 label="AI Knowledge Improvement" 
@@ -419,50 +839,95 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Business Value Propositions */}
-        <section className="py-20 px-4 bg-black">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Business Value Propositions</h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                This system delivers comprehensive business benefits through sophisticated automated analysis 
-                with human oversight for quality control and actionable insights
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {businessBenefits.map((benefit, index) => (
-                <div key={index} className="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-all duration-300">
-                  <div className="text-pink-400 mb-4">
-                    {benefit.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{benefit.title}</h3>
-                  <p className="text-gray-300 text-sm">{benefit.description}</p>
-                </div>
+        {/* Service Cards Section */}
+        <section className="pt-0 pb-20 px-4 bg-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8">
+              {serviceCards.map((service, index) => (
+                <ServiceCard
+                  key={index}
+                  title={service.title}
+                  subtitle={service.subtitle}
+                  description={service.description}
+                  features={service.features}
+                  buttonText={service.buttonText}
+                  delay={index * 200}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section id="contact" className="py-20 px-4 bg-black">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Start Your AI Journey Today
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              See how Clariverse can transform your customer communications and drive business success
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-purple-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300">
-                Schedule a Consultation
-              </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-300">
-                Explore Case Studies
-              </button>
+        {/* Deep AI Expertise Section */}
+        <section className="py-20 px-4 bg-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Deep AI Expertise Across Domains</h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Decades of experience from successful enterprise AI implementations
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {expertiseCards.map((expertise, index) => (
+                <ExpertiseCard
+                  key={index}
+                  title={expertise.title}
+                  features={expertise.features}
+                  delay={index * 100}
+                />
+              ))}
             </div>
           </div>
         </section>
+
+        {/* The YaaraLabs Advantage Section */}
+        <section className="py-20 px-4 bg-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">The YaaraLabs Advantage</h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Why global leaders choose us as their trusted AI transformation partner
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              {advantageCards.map((advantage, index) => (
+                <AdvantageCard
+                  key={index}
+                  title={advantage.title}
+                  features={advantage.features}
+                  delay={index * 150}
+                  isAlternate={index >= 2} // Bottom row gets alternate styling
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Driving AI Innovation Section */}
+        <section className="py-20 px-4 bg-black">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Driving AI Innovation Across Global Enterprises</h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Selective Engagements • High-Impact Focus • Innovation-Driven Results
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              {innovationCards.map((innovation, index) => (
+                <InnovationCard
+                  key={index}
+                  title={innovation.title}
+                  description={innovation.description}
+                  delay={index * 200}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
 
         {/* Footer */}
         <footer className="py-12 px-4 bg-black border-t border-gray-800">
