@@ -108,10 +108,6 @@ const HomePage: React.FC = () => {
     if (!containerRef.current || !window.THREE) return;
 
     const container = containerRef.current;
-    
-    // Start with transparent background
-    container.style.opacity = '0';
-    
     const scene = new window.THREE.Scene();
     const clock = new window.THREE.Clock();
     
@@ -168,42 +164,33 @@ const HomePage: React.FC = () => {
     });
 
     const meshes: THREE.Mesh[] = [];
-    // Start with fewer meshes for faster initialization
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 2000; i++) {
       const mesh = new window.THREE.Mesh(geometry, material);
-      mesh.position.z = i * 4 - cubeSize * 12;
+      mesh.position.z = i * 4 - cubeSize * 50;
       mesh.rotation.z = i * 0.01;
       scene.add(mesh);
       meshes.push(mesh);
     }
-    
-    // Add remaining meshes after initial render
-    setTimeout(() => {
-      for (let i = 500; i < 1000; i++) {
-        const mesh = new window.THREE.Mesh(geometry, material);
-        mesh.position.z = i * 4 - cubeSize * 12;
-        mesh.rotation.z = i * 0.01;
-        scene.add(mesh);
-        meshes.push(mesh);
-      }
-    }, 100);
 
     const renderer = new window.THREE.WebGLRenderer({ 
-      antialias: false, 
+      antialias: true, 
       alpha: false,
       powerPreference: "high-performance"
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 1);
     renderer.setSize(window.innerWidth, window.innerHeight);
     
     container.appendChild(renderer.domElement);
     
-    // Smoothly fade in the Three.js background over 1 second
+    // Start with light transparency and gradually reveal
+    container.style.opacity = '0.1';
+    container.style.transition = 'opacity 3s ease-in-out';
+    
+    // Gradually fade in to full visibility
     setTimeout(() => {
-      container.style.transition = 'opacity 1s ease-in-out';
       container.style.opacity = '1';
-    }, 50);
+    }, 300);
     
     sceneRef.current = scene;
     rendererRef.current = renderer;
@@ -271,22 +258,15 @@ const HomePage: React.FC = () => {
       return;
     }
 
-    // Use a faster CDN and add async loading
+    // Preload Three.js for faster initialization
     const script = document.createElement('script');
-    script.src = 'https://unpkg.com/three@0.158.0/build/three.min.js';
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
     script.async = true;
     script.onload = () => {
-      initShaderBackground();
-    };
-    script.onerror = () => {
-      // Fallback to original CDN
-      const fallbackScript = document.createElement('script');
-      fallbackScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-      fallbackScript.async = true;
-      fallbackScript.onload = () => {
+      // Small delay to ensure DOM is ready
+      requestAnimationFrame(() => {
         initShaderBackground();
-      };
-      document.head.appendChild(fallbackScript);
+      });
     };
     document.head.appendChild(script);
 
