@@ -108,6 +108,10 @@ const HomePage: React.FC = () => {
     if (!containerRef.current || !window.THREE) return;
 
     const container = containerRef.current;
+    
+    // Start with transparent background
+    container.style.opacity = '0';
+    
     const scene = new window.THREE.Scene();
     const clock = new window.THREE.Clock();
     
@@ -164,20 +168,42 @@ const HomePage: React.FC = () => {
     });
 
     const meshes: THREE.Mesh[] = [];
-    for (let i = 0; i < 2000; i++) {
+    // Start with fewer meshes for faster initialization
+    for (let i = 0; i < 500; i++) {
       const mesh = new window.THREE.Mesh(geometry, material);
-      mesh.position.z = i * 4 - cubeSize * 50;
+      mesh.position.z = i * 4 - cubeSize * 12;
       mesh.rotation.z = i * 0.01;
       scene.add(mesh);
       meshes.push(mesh);
     }
+    
+    // Add remaining meshes after initial render
+    setTimeout(() => {
+      for (let i = 500; i < 1000; i++) {
+        const mesh = new window.THREE.Mesh(geometry, material);
+        mesh.position.z = i * 4 - cubeSize * 12;
+        mesh.rotation.z = i * 0.01;
+        scene.add(mesh);
+        meshes.push(mesh);
+      }
+    }, 100);
 
-    const renderer = new window.THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    const renderer = new window.THREE.WebGLRenderer({ 
+      antialias: false, 
+      alpha: false,
+      powerPreference: "high-performance"
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 1);
     renderer.setSize(window.innerWidth, window.innerHeight);
     
     container.appendChild(renderer.domElement);
+    
+    // Smoothly fade in the Three.js background over 1 second
+    setTimeout(() => {
+      container.style.transition = 'opacity 1s ease-in-out';
+      container.style.opacity = '1';
+    }, 50);
     
     sceneRef.current = scene;
     rendererRef.current = renderer;
@@ -186,11 +212,13 @@ const HomePage: React.FC = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
       
       const delta = clock.getDelta();
-      uniforms.time.value += delta * 2;
+      uniforms.time.value += delta * 3;
       
-      camera.rotation.x += delta * 0.05;
-      camera.rotation.z += delta * 0.05;
+      camera.rotation.x += delta * 0.08;
+      camera.rotation.z += delta * 0.08;
       
+      // Optimize mesh updates while preserving wave pattern
+      const time = uniforms.time.value;
       meshes.forEach((object, i) => {
         object.rotation.x += 0.02;
         object.rotation.z += 0.02;
@@ -243,10 +271,22 @@ const HomePage: React.FC = () => {
       return;
     }
 
+    // Use a faster CDN and add async loading
     const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    script.src = 'https://unpkg.com/three@0.158.0/build/three.min.js';
+    script.async = true;
     script.onload = () => {
       initShaderBackground();
+    };
+    script.onerror = () => {
+      // Fallback to original CDN
+      const fallbackScript = document.createElement('script');
+      fallbackScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      fallbackScript.async = true;
+      fallbackScript.onload = () => {
+        initShaderBackground();
+      };
+      document.head.appendChild(fallbackScript);
     };
     document.head.appendChild(script);
 
