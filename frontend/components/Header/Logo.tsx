@@ -15,6 +15,7 @@ const Logo: React.FC<LogoProps> = ({ className = "" }) => {
           fill
           className="object-contain"
           priority
+          sizes="48px"
         />
       </div>
       <span className="text-white text-xl ml-3 font-semibold">YaaraLabs</span>
