@@ -235,6 +235,13 @@ const HomePage: React.FC = () => {
   // Initialize Three.js background for non-authenticated users
   useEffect(() => {
     if (session) return; // Don't run if user is authenticated
+    if (status === "loading") return; // Don't run while loading
+
+    // Check if Three.js is already loaded
+    if (window.THREE) {
+      initShaderBackground();
+      return;
+    }
 
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
@@ -251,7 +258,7 @@ const HomePage: React.FC = () => {
         rendererRef.current.dispose();
       }
     };
-  }, [session]);
+  }, [session, status]);
 
 
   // If user is authenticated, don't render the landing page
