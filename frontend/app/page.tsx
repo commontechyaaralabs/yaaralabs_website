@@ -238,8 +238,8 @@ const HomePage: React.FC = () => {
       setShowTransition(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000); // Transition duration
-    }, 1500); // Initial loading time
+      }, 500); // Transition duration
+    }, 800); // Initial loading time
     
     return () => clearTimeout(timer);
   }, [session, status, router]);
