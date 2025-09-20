@@ -28,6 +28,7 @@ interface ServiceCardProps {
   features: string[];
   buttonText: string;
   delay: number;
+  onClick?: () => void;
 }
 
 interface ExpertiseCardProps {
@@ -123,7 +124,7 @@ const MetricBox: React.FC<MetricBoxProps> = ({ value, label, delay }) => {
   );
 };
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ title, subtitle, description, features, buttonText, delay }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, subtitle, description, features, buttonText, delay, onClick }) => {
   const [isVisible, setIsVisible] = React.useState(false);
   const [hasAnimated, setHasAnimated] = React.useState(false);
   const cardRef = React.useRef<HTMLDivElement>(null);
@@ -183,7 +184,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, subtitle, description,
           ))}
         </div>
         
-        <button className="w-full bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center justify-center space-x-2">
+        <button 
+          onClick={onClick}
+          className="w-full bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer"
+        >
           <span>{buttonText}</span>
           <ArrowRight className="w-4 h-4" />
         </button>
@@ -572,6 +576,22 @@ const HomePage: React.FC = () => {
     router.push('/login');
   };
 
+  const handleAIDevelopmentClick = () => {
+    router.push('/product_development');
+  };
+
+  const handleAITrainingClick = () => {
+    router.push('/AI_Training');
+  };
+
+  const handleDataAnnotationClick = () => {
+    router.push('/Data_Annotation');
+  };
+
+  const handleTermsConditionsClick = () => {
+    router.push('/Terms-and-conditions');
+  };
+
   const productFeatures = [
     {
       icon: <Mail className="w-12 h-12" />,
@@ -611,7 +631,8 @@ const HomePage: React.FC = () => {
         "Intelligent automation and workflow optimization",
         "Agentic AI systems and autonomous decision-making"
       ],
-      buttonText: "EXPLORE AI DEVELOPMENT"
+      buttonText: "EXPLORE AI DEVELOPMENT",
+      onClick: handleAIDevelopmentClick
     },
     {
       title: "Workforce AI Enablement",
@@ -623,7 +644,8 @@ const HomePage: React.FC = () => {
         "Business leader AI application masterclasses",
         "Technical team upskilling in AI/ML implementation"
       ],
-      buttonText: "DISCOVER AI TRAINING"
+      buttonText: "DISCOVER AI TRAINING",
+      onClick: handleAITrainingClick
     },
     {
       title: "AI Strategy Consulting",
@@ -647,7 +669,8 @@ const HomePage: React.FC = () => {
         "Scalable Solutions - From prototype datasets to production-scale annotation",
         "Global Expertise - Multi-industry annotation specialists"
       ],
-      buttonText: "ACCELERATE AI TRAINING"
+      buttonText: "ACCELERATE AI TRAINING",
+      onClick: handleDataAnnotationClick
     }
   ];
 
@@ -852,6 +875,7 @@ const HomePage: React.FC = () => {
                   features={service.features}
                   buttonText={service.buttonText}
                   delay={index * 200}
+                  onClick={service.onClick}
                 />
               ))}
             </div>
@@ -928,30 +952,88 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
+        {/* Hero Text Section */}
+        <section className="py-20 px-4 relative">
+          <div 
+            className="absolute inset-0 w-full h-full"
+            style={{
+              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 25%, rgba(236, 72, 153, 0.1) 50%, rgba(239, 68, 68, 0.1) 75%, rgba(245, 158, 11, 0.1) 100%)'
+            }}
+          />
+          {/* Wave separator */}
+          <div 
+            className="absolute top-0 left-0 w-full h-1 opacity-30"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(147, 51, 234, 0.5) 25%, rgba(59, 130, 246, 0.5) 50%, rgba(147, 51, 234, 0.5) 75%, transparent 100%)'
+            }}
+          />
+          
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center">
+              <h2 className="text-2xl md:text-4xl font-bold text-white mb-8 leading-tight">
+                Augment your business and workforce potential with AI
+              </h2>
+            </div>
+          </div>
+        </section>
+
 
         {/* Footer */}
-        <footer className="py-12 px-4 bg-black border-t border-gray-800">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center">
-                    <span className="text-white font-bold">C</span>
-                  </div>
-                  <span className="text-white text-lg ml-2 font-semibold">Clariverse</span>
+        <footer className="py-16 px-4 bg-black border-t border-gray-800">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-12 items-start">
+              {/* Left Column - Logo and Company Name */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                  <Image 
+                    src="/yaaralogo-circle.png" 
+                    alt="YaaraLabs Logo" 
+                    width={40} 
+                    height={40} 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <p className="text-gray-400 max-w-md">Empowering businesses with AI-driven insights</p>
+                <span className="text-white text-lg font-semibold">YaaraLabs</span>
               </div>
-              <div className="space-y-4">
-                <h4 className="text-white font-semibold text-lg">Contact</h4>
-                <div className="space-y-3 text-gray-400">
-                  <div>hello@yaaralabs.ai</div>
+              
+              {/* Solutions Column */}
+              <div>
+                <h4 className="text-white font-semibold text-lg mb-6">Solutions</h4>
+                <div className="space-y-3">
+                  <a href="/product_development" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">AI Product Development</a>
+                  <a href="/AI_Training" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Workforce AI Enablement</a>
+                  <a href="#" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">AI Strategy Consulting</a>
+                  <a href="#" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Custom AI Solutions</a>
+                </div>
+              </div>
+              
+              {/* Company Column */}
+              <div>
+                <h4 className="text-white font-semibold text-lg mb-6">Company</h4>
+                <div className="space-y-3">
+                  <a href="#" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Our Expertise</a>
+                  <a href="#" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Contact Us</a>
+                  <a href="#" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Accessibility Statement</a>
+                </div>
+              </div>
+              
+              {/* Contact & Legal Column */}
+              <div className="space-y-6">
+                <div className="flex items-center space-x-3">
+                  <a href="mailto:hello@yaaralabs.ai" className="text-blue-400 hover:text-blue-300 underline text-sm transition-colors">hello@yaaralabs.ai</a>
+                  <a href="https://www.linkedin.com/company/yaaralabs-ai/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-blue-400 transition-colors">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
+                
+                <div className="space-y-3">
+                  <a href="/Terms-and-conditions" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Terms & Conditions</a>
+                  <a href="#" className="block text-blue-400 hover:text-blue-300 underline text-sm transition-colors">Privacy Policy</a>
                 </div>
               </div>
             </div>
-                         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-               <p>© {new Date().getFullYear()} Clariverse. All rights reserved.</p>
-             </div>
           </div>
         </footer>
       </div>
