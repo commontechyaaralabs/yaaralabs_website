@@ -6,7 +6,6 @@ import {Header} from '@/components/Header/Header';
 import * as THREE from 'three';
 import './globals.css';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 declare global {
@@ -375,7 +374,6 @@ const InnovationCard: React.FC<InnovationCardProps> = ({ title, description, del
 
 const HomePage: React.FC = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -517,24 +515,8 @@ const HomePage: React.FC = () => {
     };
   };
 
-  // Check authentication status and redirect if needed
+  // Initialize Three.js background
   useEffect(() => {
-    console.log("LandingPage: Status:", status, "Session:", !!session);
-    
-    if (status === "loading") return;
-    
-    // If user is authenticated, redirect to home page
-    if (session) {
-      console.log("LandingPage: Redirecting authenticated user to /home");
-      router.replace('/home');
-      return;
-    }
-  }, [session, status, router]);
-
-  // Initialize Three.js background for non-authenticated users
-  useEffect(() => {
-    if (session) return; // Don't run if user is authenticated
-    if (status === "loading") return; // Don't run while loading
 
     // Check if Three.js is already loaded
     if (window.THREE) {
@@ -557,13 +539,7 @@ const HomePage: React.FC = () => {
         rendererRef.current.dispose();
       }
     };
-  }, [session, status]);
-
-
-  // If user is authenticated, don't render the landing page
-  if (session) {
-    return null;
-  }
+  }, []);
 
   const scrollToFeatures = () => {
     const featuresSection = document.getElementById('product-features');

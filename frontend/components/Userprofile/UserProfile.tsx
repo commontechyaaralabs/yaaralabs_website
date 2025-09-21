@@ -1,16 +1,9 @@
 'use client';
 
 import React from 'react';
-import { useSession, signOut } from 'next-auth/react';
-import { User, LogOut, Settings } from 'lucide-react';
+import { User, Settings } from 'lucide-react';
 
 const UserProfile: React.FC = () => {
-  const { data: session } = useSession();
-
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/' });
-  };
-
   return (
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-3">
@@ -19,7 +12,7 @@ const UserProfile: React.FC = () => {
         </div>
         <div className="text-white">
           <div className="text-sm font-medium">
-            {session?.user?.name || session?.user?.email || 'User'}
+            User
           </div>
         </div>
       </div>
@@ -30,13 +23,6 @@ const UserProfile: React.FC = () => {
           title="Settings"
         >
           <Settings className="w-5 h-5" />
-        </button>
-        <button
-          onClick={handleSignOut}
-          className="p-2 hover:bg-gray-800 hover:bg-opacity-50 rounded-lg text-white transition-colors duration-200"
-          title="Sign Out"
-        >
-          <LogOut className="w-5 h-5" />
         </button>
       </div>
     </div>

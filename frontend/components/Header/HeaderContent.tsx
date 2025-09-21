@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useSession } from 'next-auth/react';
 import { Logo } from './Logo';
 import { NavigationLinks } from './NavigationLinks';
 import UserProfile from '../Userprofile/UserProfile';
@@ -22,8 +21,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
   onToggleSidebar,
   onLoginClick
 }) => {
-  const { status } = useSession();
-  const isAuthenticated = status === 'authenticated';
+  const isAuthenticated = false; // Always show navigation links since no auth
 
   return (
     <div className={`flex justify-between items-center ${className}`}>

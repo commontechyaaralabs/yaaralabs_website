@@ -5,7 +5,6 @@ import { ArrowRight, Network, Settings, CheckCircle, BarChart3 } from 'lucide-re
 import {Header} from '@/components/Header/Header';
 import '../globals.css';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
 interface MetricBoxProps {
   value: string;
@@ -417,23 +416,6 @@ const ConsultationColumn: React.FC<ConsultationColumnProps> = ({ title, items, d
 
 const CustomAISolutionsPage: React.FC = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    console.log("CustomAISolutionsPage: Status:", status, "Session:", !!session);
-    
-    if (status === "loading") return;
-    
-    if (session) {
-      console.log("CustomAISolutionsPage: Redirecting authenticated user to /home");
-      router.replace('/home');
-      return;
-    }
-  }, [session, status, router]);
-
-  if (session) {
-    return null;
-  }
 
   const handleLoginClick = () => {
     router.push('/login');

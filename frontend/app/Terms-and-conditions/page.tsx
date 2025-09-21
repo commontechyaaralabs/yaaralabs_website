@@ -3,27 +3,9 @@
 import React, { useEffect } from 'react';
 import { Header } from '@/components/Header/Header';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
 const TermsAndConditionsPage: React.FC = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    console.log("TermsAndConditionsPage: Status:", status, "Session:", !!session);
-    
-    if (status === "loading") return;
-    
-    if (session) {
-      console.log("TermsAndConditionsPage: Redirecting authenticated user to /home");
-      router.replace('/home');
-      return;
-    }
-  }, [session, status, router]);
-
-  if (session) {
-    return null;
-  }
 
   const handleLoginClick = () => {
     router.push('/login');

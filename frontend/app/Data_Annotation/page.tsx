@@ -5,7 +5,6 @@ import { ArrowRight, Eye, MessageSquare, Mic, Layers } from 'lucide-react';
 import {Header} from '@/components/Header/Header';
 import '../globals.css';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 interface MetricBoxProps {
@@ -303,23 +302,6 @@ const AdvancedSection: React.FC<AdvancedSectionProps> = ({
 
 const DataAnnotationPage: React.FC = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    console.log("DataAnnotationPage: Status:", status, "Session:", !!session);
-    
-    if (status === "loading") return;
-    
-    if (session) {
-      console.log("DataAnnotationPage: Redirecting authenticated user to /home");
-      router.replace('/home');
-      return;
-    }
-  }, [session, status, router]);
-
-  if (session) {
-    return null;
-  }
 
   const handleLoginClick = () => {
     router.push('/login');
