@@ -84,6 +84,6 @@ const ScrollReveal: React.FC<ScrollRevealProps> = React.memo(({
       {children}
     </div>
   );
-};
+});
 
 export default ScrollReveal;
