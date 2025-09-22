@@ -49,7 +49,7 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
+      x: direction > 0 ? 100 : -100, // Reduced movement distance
       opacity: 0
     }),
     center: {
@@ -59,7 +59,7 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 300 : -300,
+      x: direction < 0 ? 100 : -100, // Reduced movement distance
       opacity: 0
     })
   };
@@ -78,8 +78,8 @@ const TestimonialsSlider: React.FC<TestimonialsSliderProps> = ({
               animate="center"
               exit="exit"
               transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 }
+                x: { type: "spring", stiffness: 200, damping: 25 }, // Reduced spring intensity
+                opacity: { duration: 0.15 } // Faster opacity transition
               }}
               className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 md:p-12 border border-gray-700"
             >

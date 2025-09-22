@@ -14,7 +14,7 @@ interface ScrollRevealProps {
   triggerOnce?: boolean;
 }
 
-const ScrollReveal: React.FC<ScrollRevealProps> = ({
+const ScrollReveal: React.FC<ScrollRevealProps> = React.memo(({
   children,
   direction = 'up',
   delay = 0,
@@ -27,7 +27,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const { ref, inView } = useInView({
     threshold,
-    triggerOnce
+    triggerOnce,
+    rootMargin: '50px 0px' // Start animation slightly before element is in view
   });
 
   useEffect(() => {

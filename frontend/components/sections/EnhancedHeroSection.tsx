@@ -21,18 +21,25 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({ onScrollToFea
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
 
   useEffect(() => {
+    let rafId: number;
+    
     const handleMouseMove = (e: MouseEvent) => {
       if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: (e.clientX - rect.left) / rect.width,
-          y: (e.clientY - rect.top) / rect.height
+        rafId = requestAnimationFrame(() => {
+          const rect = heroRef.current!.getBoundingClientRect();
+          setMousePosition({
+            x: (e.clientX - rect.left) / rect.width,
+            y: (e.clientY - rect.top) / rect.height
+          });
         });
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const containerVariants = {
@@ -94,25 +101,25 @@ const EnhancedHeroSection: React.FC<EnhancedHeroSectionProps> = ({ onScrollToFea
         transition={{ duration: 0.1 }}
       />
 
-      {/* Floating geometric shapes */}
+      {/* Floating geometric shapes - Reduced from 8 to 4 for better performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-2 h-2 bg-purple-400/30 rounded-full"
             style={{
-              left: `${10 + i * 12}%`,
-              top: `${20 + (i % 3) * 30}%`,
+              left: `${15 + i * 20}%`,
+              top: `${25 + (i % 2) * 40}%`,
             }}
             animate={{
-              y: [0, -30, 0],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1]
+              y: [0, -20, 0],
+              opacity: [0.3, 0.6, 0.3],
+              scale: [1, 1.2, 1]
             }}
             transition={{
-              duration: 3 + i * 0.5,
+              duration: 4 + i * 0.3,
               repeat: Infinity,
-              delay: i * 0.5,
+              delay: i * 0.8,
               ease: "easeInOut"
             }}
           />

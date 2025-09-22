@@ -9,7 +9,7 @@ interface ParallaxBackgroundProps {
   direction?: 'vertical' | 'horizontal';
 }
 
-const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
+const ParallaxBackground: React.FC<ParallaxBackgroundProps> = React.memo(({
   children,
   speed = 0.5,
   className = '',
@@ -17,24 +17,36 @@ const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
 }) => {
   const [offset, setOffset] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (ref.current) {
-        const rect = ref.current.getBoundingClientRect();
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -speed;
-        
-        if (direction === 'vertical') {
-          setOffset(rate);
-        } else {
-          setOffset(rate);
-        }
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
       }
+      
+      rafRef.current = requestAnimationFrame(() => {
+        if (ref.current) {
+          const rect = ref.current.getBoundingClientRect();
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * -speed;
+          
+          if (direction === 'vertical') {
+            setOffset(rate);
+          } else {
+            setOffset(rate);
+          }
+        }
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
   }, [speed, direction]);
 
   return (
@@ -50,6 +62,6 @@ const ParallaxBackground: React.FC<ParallaxBackgroundProps> = ({
       {children}
     </div>
   );
-};
+});
 
 export default ParallaxBackground;
