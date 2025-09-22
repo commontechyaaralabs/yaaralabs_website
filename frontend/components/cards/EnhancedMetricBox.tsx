@@ -55,7 +55,7 @@ const EnhancedMetricBox: React.FC<EnhancedMetricBoxProps> = ({
       rotate: 10
     }
   };
-
+ 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
