@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
-import {Header} from '@/components/Header/Header';
+import { ArrowRight, Brain, Users, Target, Award, TrendingUp, CheckCircle, Clock, BookOpen, Zap } from 'lucide-react';
+import {EnhancedHeader} from '@/components/Header/EnhancedHeader';
 import {Footer} from '@/components/Footer';
 import {MetricBox} from '@/components/MetricBox';
+import EnhancedMetricBox from '@/components/cards/EnhancedMetricBox';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import QuickReveal from '@/components/animations/QuickReveal';
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import '../globals.css';
 import { useRouter } from 'next/navigation';
 
@@ -317,38 +321,43 @@ const AITrainingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Navigation Bar */}
-      <Header transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      {/* Enhanced Navigation Bar */}
+      <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="relative pt-32 pb-16 px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Build AI-Confident Organizations from the Ground Up
-            </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
-              Our proven three-tier methodology delivers 100%+ knowledge improvement and measurable business impact. Industry-focused curriculum that transforms teams from AI-anxious to AI-champion in weeks, not months.
-            </p>
-          </div>
+          <QuickReveal direction="up" delay={0} duration={0.6}>
+            <div className="text-center">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+                Build AI-Confident Organizations from the Ground Up
+              </h1>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+                Our proven three-tier methodology delivers 100%+ knowledge improvement and measurable business impact. Industry-focused curriculum that transforms teams from AI-anxious to AI-champion in weeks, not months.
+              </p>
+            </div>
+          </QuickReveal>
         </div>
       </section>
 
       {/* Three-Tier Training Methodology Section */}
       <section className="py-20 px-4 bg-black">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Three-Tier Training Methodology
-            </h2>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Our proven pyramid approach transforms your organization from AI-anxious to AI-champion
-            </p>
-          </div>
+          <QuickReveal direction="up" delay={0} duration={0.6}>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Three-Tier Training Methodology
+              </h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Our proven pyramid approach transforms your organization from AI-anxious to AI-champion
+              </p>
+            </div>
+          </QuickReveal>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Foundation Level */}
-            <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+            <QuickReveal direction="up" delay={100} duration={0.5}>
+              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700 hover:border-purple-500 transition-all duration-300 hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">Foundation Level (AI Literacy)</h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
@@ -364,10 +373,12 @@ const AITrainingPage: React.FC = () => {
                   <span className="text-gray-200"><strong>Outcome:</strong> Basic AI understanding and confidence</span>
                 </div>
               </div>
-            </div>
+              </div>
+            </QuickReveal>
 
             {/* Champions Level */}
-            <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+            <QuickReveal direction="up" delay={200} duration={0.5}>
+              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700 hover:border-purple-500 transition-all duration-300 hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">Champions Level (AI Application)</h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
@@ -383,10 +394,12 @@ const AITrainingPage: React.FC = () => {
                   <span className="text-gray-200"><strong>Outcome:</strong> Hands-on AI tool proficiency</span>
                 </div>
               </div>
-            </div>
+              </div>
+            </QuickReveal>
 
             {/* Strategy Partners Level */}
-            <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+            <QuickReveal direction="up" delay={300} duration={0.5}>
+              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700 hover:border-purple-500 transition-all duration-300 hover:scale-105">
               <h3 className="text-2xl font-bold text-white mb-4">Strategy Partners Level (AI Leadership)</h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
@@ -402,7 +415,8 @@ const AITrainingPage: React.FC = () => {
                   <span className="text-gray-200"><strong>Outcome:</strong> AI strategy and governance expertise</span>
                 </div>
               </div>
-            </div>
+              </div>
+            </QuickReveal>
           </div>
         </div>
       </section>
@@ -484,6 +498,9 @@ const AITrainingPage: React.FC = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Back to Top Button */}
+      <BackToTopButton />
     </div>
   );
 };

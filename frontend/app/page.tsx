@@ -1,10 +1,18 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Brain, Mail, MessageSquare, Ticket, TrendingUp, ArrowRight, Database, Settings, Shield, Zap, Phone, Share2 } from 'lucide-react';
-import {Header} from '@/components/Header/Header';
+import { Brain, Mail, MessageSquare, Ticket, TrendingUp, ArrowRight, Database, Settings, Shield, Zap, Phone, Share2, Users, Target, Award, Globe } from 'lucide-react';
+import {EnhancedHeader} from '@/components/Header/EnhancedHeader';
 import {Footer} from '@/components/Footer';
+import EnhancedFooter from '@/components/Footer/EnhancedFooter';
 import {MetricBox} from '@/components/MetricBox';
+import EnhancedServiceCard from '@/components/cards/EnhancedServiceCard';
+import EnhancedMetricBox from '@/components/cards/EnhancedMetricBox';
+import EnhancedHeroSection from '@/components/sections/EnhancedHeroSection';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import QuickReveal from '@/components/animations/QuickReveal';
+import BackToTopButton from '@/components/ui/BackToTopButton';
+import TestimonialsSlider from '@/components/sliders/TestimonialsSlider';
 import * as THREE from 'three';
 import './globals.css';
 import { useRouter } from 'next/navigation';
@@ -551,6 +559,7 @@ const HomePage: React.FC = () => {
 
   const serviceCards = [
     {
+      id: 1,
       title: "AI WORKFORCE ENABLEMENT",
       subtitle: "Build AI-Confident Organizations from Ground Up",
       description: "Transform every level of your organization with our proven three-tier methodology: AI Literacy (Foundation) → AI Champions (Intermediate) → AI Strategy Partners (Leadership). Our banking-focused curriculum delivers measurable results in weeks, not months.",
@@ -561,9 +570,12 @@ const HomePage: React.FC = () => {
         "100%+ knowledge improvement guaranteed"
       ],
       buttonText: "DISCOVER AI TRAINING",
+      icon: <Brain className="w-6 h-6" />,
+      gradient: "from-purple-500/20 to-pink-500/20",
       onClick: handleAITrainingClick
     },
     {
+      id: 2,
       title: "AI STRATEGY CONSULTING",
       subtitle: "Navigate Your AI Journey with Expert Guidance",
       description: "Chart your path to AI transformation with strategic precision. Our senior AI consultants combine boardroom strategy with hands-on implementation experience to ensure your AI initiatives deliver measurable ROI from day one.",
@@ -574,9 +586,12 @@ const HomePage: React.FC = () => {
         "ROI optimization and performance measurement"
       ],
       buttonText: "GET AI ASSESSMENT",
+      icon: <Target className="w-6 h-6" />,
+      gradient: "from-blue-500/20 to-purple-500/20",
       onClick: handleContactClick
     },
     {
+      id: 3,
       title: "AI DEVELOPMENT SERVICES",
       subtitle: "From Vision to Production-Ready AI Solutions",
       description: "Accelerate your innovation with custom AI solutions built by practitioners who understand both technology and business impact. Our experienced development team creates scalable, enterprise-grade AI systems.",
@@ -587,9 +602,12 @@ const HomePage: React.FC = () => {
         "MLOps and model lifecycle management"
       ],
       buttonText: "EXPLORE AI DEVELOPMENT",
+      icon: <Settings className="w-6 h-6" />,
+      gradient: "from-green-500/20 to-blue-500/20",
       onClick: handleAIDevelopmentClick
     },
     {
+      id: 4,
       title: "AI-POWERED DATA ANNOTATION SERVICES",
       subtitle: "Transform Raw Data into AI-Ready Training Sets with Precision and Scale",
       description: "Accelerate your AI model development with expertly annotated datasets that deliver superior performance. Our advanced hybrid methodology combines cutting-edge AI automation with expert human validation, reducing annotation time by 40% while maintaining enterprise-grade accuracy for your machine learning initiatives.",
@@ -600,6 +618,8 @@ const HomePage: React.FC = () => {
         "Global Expertise - Multi-industry annotation specialists"
       ],
       buttonText: "ACCELERATE AI TRAINING",
+      icon: <Database className="w-6 h-6" />,
+      gradient: "from-pink-500/20 to-orange-500/20",
       onClick: handleDataAnnotationClick
     }
   ];
@@ -709,6 +729,44 @@ const HomePage: React.FC = () => {
     }
   ];
 
+  const testimonials = [
+    {
+      id: 1,
+      quote: "Extremely thorough the subjects were. The trainer was fantastic explaining complicated concepts in the most simple way",
+      author: "EVP",
+      position: "Executive Vice President",
+      company: "Fortune 500 Company"
+    },
+    {
+      id: 2,
+      quote: "The program was very hands-on. Instead of just theory, it highlighted real time use cases and step-by-step practical experience",
+      author: "SVP",
+      position: "Senior Vice President",
+      company: "Fortune 500 Company"
+    },
+    {
+      id: 3,
+      quote: "Very beneficial and really builds confidence in how AI and LLM can be used in day to day work",
+      author: "VP",
+      position: "Vice President",
+      company: "Fortune 500 Company"
+    },
+    {
+      id: 4,
+      quote: "The AI training transformed our entire team's approach to technology. We now see AI as an enabler, not a threat.",
+      author: "CTO",
+      position: "Chief Technology Officer",
+      company: "Leading Indian Bank"
+    },
+    {
+      id: 5,
+      quote: "YaaraLabs didn't just train us on AI tools - they taught us how to think strategically about AI implementation.",
+      author: "Head of Digital",
+      position: "Head of Digital Transformation",
+      company: "Global Enterprise"
+    }
+  ];
+
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#010101' }}>
       {/* Three.js Shader Background - Limited to hero section */}
@@ -730,76 +788,61 @@ const HomePage: React.FC = () => {
         />
       </div>
 
-      {/* Navigation Bar - Public version without sidebar */}
-      <Header transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      {/* Enhanced Navigation Bar */}
+      <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
 
-      {/* Hero Section */}
-      <section className="relative z-30 h-screen flex items-center px-8">
-        <div className="w-full transition-all duration-1000 opacity-100 translate-y-0">
-          <div className="relative">
-            <div className="mt-16">
-              <h1 className="text-6xl md:text-8xl font-bold text-white text-left mb-8 font-br-firma tracking-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-                Transform Your Business with
-                <span className="block">
-                  AI Excellence
-                </span>
-              </h1>
-            </div>
-            
-            <div className="flex justify-end">
-              <p className="text-xl md:text-2xl text-white leading-tight text-right max-w-md font-br-firma" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-                Strategy to Implementation,
-                <br />
-                AI solutions that drive real business
-                <br />
-                impact
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Enhanced Hero Section */}
+      <EnhancedHeroSection onScrollToFeatures={scrollToFeatures} />
 
       {/* Main Content */}
       <div className="relative z-30 bg-black main-content">
         {/* Problem Statement Section */}
         <section className="py-20 px-4 bg-black">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                70% of AI Implementation Failures Are People Problems, Not Technology Issues
-              </h2>
-              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Your teams need AI fluency to unlock the value of your AI investments
-              </p>
-            </div>
+            <QuickReveal direction="up" delay={0} duration={0.6}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                  70% of AI Implementation Failures Are People Problems, Not Technology Issues
+                </h2>
+                <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                  Your teams need AI fluency to unlock the value of your AI investments
+                </p>
+              </div>
+            </QuickReveal>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
-                <h3 className="text-2xl font-bold text-white mb-4">Skills Gap Crisis</h3>
-                <div className="space-y-3 text-gray-200">
-                  <p className="text-lg font-semibold">78% of banking professionals lack AI literacy</p>
-                  <p className="text-lg font-semibold">60% of executives estimate workforce needs AI reskilling</p>
+              <QuickReveal direction="up" delay={100} duration={0.5}>
+                <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700 hover:border-purple-500 transition-all duration-300 hover:scale-105">
+                  <h3 className="text-2xl font-bold text-white mb-4">Skills Gap Crisis</h3>
+                  <div className="space-y-3 text-gray-200">
+                    <p className="text-lg font-semibold">78% of banking professionals lack AI literacy</p>
+                    <p className="text-lg font-semibold">60% of executives estimate workforce needs AI reskilling</p>
+                  </div>
+                  <p className="text-sm text-gray-400 mt-4">Source: BCG 2025, McKinsey studies</p>
                 </div>
-                <p className="text-sm text-gray-400 mt-4">Source: BCG 2025, McKinsey studies</p>
-              </div>
+              </QuickReveal>
 
-              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
-                <h3 className="text-2xl font-bold text-white mb-4">Implementation Challenges</h3>
-                <div className="space-y-3 text-gray-200">
-                  <p className="text-lg font-semibold">Teams struggle to evaluate AI solutions</p>
-                  <p className="text-lg font-semibold">ROI prioritization and use cases get lost</p>
+              <QuickReveal direction="up" delay={200} duration={0.5}>
+                <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700 hover:border-purple-500 transition-all duration-300 hover:scale-105">
+                  <h3 className="text-2xl font-bold text-white mb-4">Implementation Challenges</h3>
+                  <div className="space-y-3 text-gray-200">
+                    <p className="text-lg font-semibold">Teams struggle to evaluate AI solutions</p>
+                    <p className="text-lg font-semibold">ROI prioritization and use cases get lost</p>
+                  </div>
+                  <p className="text-sm text-gray-400 mt-4">Source: IBM AI Implementation Report</p>
                 </div>
-                <p className="text-sm text-gray-400 mt-4">Source: IBM AI Implementation Report</p>
-              </div>
+              </QuickReveal>
 
-              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
-                <h3 className="text-2xl font-bold text-white mb-4">Workforce Anxiety</h3>
-                <div className="space-y-3 text-gray-200">
-                  <p className="text-lg font-semibold">61% fear job displacement by AI</p>
-                  <p className="text-lg font-semibold">Resistance to adopting AI solutions</p>
+              <QuickReveal direction="up" delay={300} duration={0.5}>
+                <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700 hover:border-purple-500 transition-all duration-300 hover:scale-105">
+                  <h3 className="text-2xl font-bold text-white mb-4">Workforce Anxiety</h3>
+                  <div className="space-y-3 text-gray-200">
+                    <p className="text-lg font-semibold">61% fear job displacement by AI</p>
+                    <p className="text-lg font-semibold">Resistance to adopting AI solutions</p>
+                  </div>
+                  <p className="text-sm text-gray-400 mt-4">Source: McKinsey Global AI Survey</p>
                 </div>
-                <p className="text-sm text-gray-400 mt-4">Source: McKinsey Global AI Survey</p>
-              </div>
+              </QuickReveal>
             </div>
           </div>
         </section>
@@ -824,22 +867,38 @@ const HomePage: React.FC = () => {
                   </p>
                   
                   <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
-                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>+102%</div>
-                      <div className="text-sm" style={{ color: '#ffffff' }}>AI Knowledge Improvement</div>
-                    </div>
-                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
-                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>12+</div>
-                      <div className="text-sm" style={{ color: '#ffffff' }}>Use Cases Identified</div>
-                    </div>
-                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
-                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>$40M+</div>
-                      <div className="text-sm" style={{ color: '#ffffff' }}>Business Impact</div>
-                    </div>
-                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
-                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>100%</div>
-                      <div className="text-sm" style={{ color: '#ffffff' }}>Participant Improvement</div>
-                    </div>
+                    <EnhancedMetricBox
+                      value="+102%"
+                      label="AI Knowledge Improvement"
+                      delay={0}
+                      icon={<TrendingUp className="w-6 h-6" />}
+                      gradient="from-purple-500 to-pink-500"
+                      isAnimated={false}
+                    />
+                    <EnhancedMetricBox
+                      value="12+"
+                      label="Use Cases Identified"
+                      delay={100}
+                      icon={<Target className="w-6 h-6" />}
+                      gradient="from-blue-500 to-purple-500"
+                      isAnimated={false}
+                    />
+                    <EnhancedMetricBox
+                      value="$40M+"
+                      label="Business Impact"
+                      delay={200}
+                      icon={<Award className="w-6 h-6" />}
+                      gradient="from-green-500 to-blue-500"
+                      isAnimated={false}
+                    />
+                    <EnhancedMetricBox
+                      value="100%"
+                      label="Participant Improvement"
+                      delay={300}
+                      icon={<Users className="w-6 h-6" />}
+                      gradient="from-pink-500 to-orange-500"
+                      isAnimated={false}
+                    />
                   </div>
 
                   <button 
@@ -852,26 +911,11 @@ const HomePage: React.FC = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                    <p className="text-gray-300 italic mb-3">
-                      "Extremely thorough the subjects were. The trainer was fantastic explaining complicated concepts in the most simple way"
-                    </p>
-                    <div className="font-semibold" style={{ color: '#b90abd' }}>EVP, Fortune 500 Company</div>
-                  </div>
-
-                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                    <p className="text-gray-300 italic mb-3">
-                      "The program was very hands-on. Instead of just theory, it highlighted real time use cases and step-by-step practical experience"
-                    </p>
-                    <div className="font-semibold" style={{ color: '#b90abd' }}>SVP, Fortune 500 Company</div>
-                  </div>
-
-                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                    <p className="text-gray-300 italic mb-3">
-                      "Very beneficial and really builds confidence in how AI and LLM can be used in day to day work"
-                    </p>
-                    <div className="font-semibold" style={{ color: '#b90abd' }}>VP, Fortune 500 Company</div>
-                  </div>
+                  <TestimonialsSlider 
+                    testimonials={testimonials}
+                    autoPlay={true}
+                    autoPlayInterval={4000}
+                  />
                 </div>
               </div>
             </div>
@@ -891,20 +935,31 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* Service Cards Section */}
+        {/* Enhanced Service Cards Section */}
         <section className="pt-0 pb-20 px-4 bg-black">
           <div className="max-w-7xl mx-auto">
+            <QuickReveal direction="up" delay={0} duration={0.6}>
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Our AI Solutions</h2>
+                <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                  Comprehensive AI services designed to transform your business from strategy to implementation
+                </p>
+              </div>
+            </QuickReveal>
+            
             <div className="grid md:grid-cols-2 gap-8">
               {serviceCards.map((service, index) => (
-                <ServiceCard
-                  key={index}
+                <EnhancedServiceCard
+                  key={service.id}
                   title={service.title}
                   subtitle={service.subtitle}
                   description={service.description}
                   features={service.features}
                   buttonText={service.buttonText}
-                  delay={index * 200}
+                  delay={index * 100}
                   onClick={service.onClick}
+                  icon={service.icon}
+                  gradient={service.gradient}
                 />
               ))}
             </div>
@@ -1034,6 +1089,9 @@ const HomePage: React.FC = () => {
         {/* Footer */}
         <Footer />
       </div>
+
+      {/* Back to Top Button */}
+      <BackToTopButton />
     </div>
   );
 };

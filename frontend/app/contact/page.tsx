@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react';
-import { Header } from '@/components/Header/Header';
+import { Mail, Phone, MapPin, Send, ArrowRight, Brain, Target, Award, TrendingUp, Users, Clock, CheckCircle } from 'lucide-react';
+import { EnhancedHeader } from '@/components/Header/EnhancedHeader';
 import { Footer } from '@/components/Footer';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import QuickReveal from '@/components/animations/QuickReveal';
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import emailjs from '@emailjs/browser';
 import '../globals.css';
 
@@ -131,20 +134,22 @@ const ContactPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-black">
       <style dangerouslySetInnerHTML={{ __html: dropdownStyles }} />
-      {/* Navigation Bar */}
-      <Header transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      {/* Enhanced Navigation Bar */}
+      <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="relative pt-32 pb-16 px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Let's Transform Your Business with AI Excellence
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Connect with our AI experts to explore how we can accelerate your innovation, enable your workforce, and drive measurable business results.
-            </p>
-          </div>
+          <QuickReveal direction="up" delay={0} duration={0.6}>
+            <div className="text-center">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+                Let's Transform Your Business with AI Excellence
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Connect with our AI experts to explore how we can accelerate your innovation, enable your workforce, and drive measurable business results.
+              </p>
+            </div>
+          </QuickReveal>
         </div>
       </section>
 
@@ -293,6 +298,9 @@ const ContactPage: React.FC = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Back to Top Button */}
+      <BackToTopButton />
     </div>
   );
 };

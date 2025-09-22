@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { ArrowRight, Eye, MessageSquare, Mic, Layers } from 'lucide-react';
-import {Header} from '@/components/Header/Header';
+import { ArrowRight, Eye, MessageSquare, Mic, Layers, Database, Target, Award, TrendingUp, Users, Clock, CheckCircle } from 'lucide-react';
+import {EnhancedHeader} from '@/components/Header/EnhancedHeader';
 import {Footer} from '@/components/Footer';
 import {MetricBox} from '@/components/MetricBox';
+import EnhancedMetricBox from '@/components/cards/EnhancedMetricBox';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import QuickReveal from '@/components/animations/QuickReveal';
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import '../globals.css';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -310,20 +314,22 @@ const DataAnnotationPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Navigation Bar */}
-      <Header transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      {/* Enhanced Navigation Bar */}
+      <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="relative pt-32 pb-16 px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Intelligent Annotation Across Every AI Domain
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Purpose-built annotation workflows designed by Experienced Annotators and AI practitioners
-            </p>
-          </div>
+          <QuickReveal direction="up" delay={0} duration={0.6}>
+            <div className="text-center">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+                Intelligent Annotation Across Every AI Domain
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Purpose-built annotation workflows designed by Experienced Annotators and AI practitioners
+              </p>
+            </div>
+          </QuickReveal>
         </div>
       </section>
 
@@ -396,6 +402,9 @@ const DataAnnotationPage: React.FC = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Back to Top Button */}
+      <BackToTopButton />
     </div>
   );
 };

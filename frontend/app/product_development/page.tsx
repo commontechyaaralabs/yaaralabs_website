@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { ArrowRight, Network, Settings, CheckCircle, BarChart3 } from 'lucide-react';
-import {Header} from '@/components/Header/Header';
+import { ArrowRight, Network, Settings, CheckCircle, BarChart3, Brain, Target, Award, TrendingUp, Users, Clock, Zap } from 'lucide-react';
+import {EnhancedHeader} from '@/components/Header/EnhancedHeader';
 import {Footer} from '@/components/Footer';
 import {MetricBox} from '@/components/MetricBox';
+import EnhancedMetricBox from '@/components/cards/EnhancedMetricBox';
+import ScrollReveal from '@/components/animations/ScrollReveal';
+import QuickReveal from '@/components/animations/QuickReveal';
+import BackToTopButton from '@/components/ui/BackToTopButton';
 import '../globals.css';
 import { useRouter } from 'next/navigation';
 
@@ -544,25 +548,27 @@ const CustomAISolutionsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Navigation Bar */}
-      <Header transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      {/* Enhanced Navigation Bar */}
+      <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="relative pt-32 pb-16 px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              AI Solutions Built by
-              <br />
-              Workforce-Trained Teams
-            </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
-              From concept to production-ready systems. Our development team combines deep technical expertise with proven training in AI workforce enablement.
-            </p>
-            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-              Supporting your trained workforce with scalable AI solutions
-            </p>
-          </div>
+          <QuickReveal direction="up" delay={0} duration={0.6}>
+            <div className="text-center">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+                AI Solutions Built by
+                <br />
+                Workforce-Trained Teams
+              </h1>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+                From concept to production-ready systems. Our development team combines deep technical expertise with proven training in AI workforce enablement.
+              </p>
+              <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+                Supporting your trained workforce with scalable AI solutions
+              </p>
+            </div>
+          </QuickReveal>
         </div>
       </section>
 
@@ -662,6 +668,9 @@ const CustomAISolutionsPage: React.FC = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Back to Top Button */}
+      <BackToTopButton />
     </div>
   );
 };
