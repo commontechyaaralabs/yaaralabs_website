@@ -298,7 +298,7 @@ const AITrainingPage: React.FC = () => {
     {
       title: "Training Needs Assessment",
       items: [
-        "30-Minute AI Development Assessment",
+        "30-Minute AI Readiness Assessment",
         "Current capability evaluation",
         "Custom program recommendations",
         "Implementation timeline and approach"
@@ -324,9 +324,85 @@ const AITrainingPage: React.FC = () => {
       <section className="relative pt-32 pb-16 px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-16 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
               Build AI-Confident Organizations from the Ground Up
             </h1>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+              Our proven three-tier methodology delivers 100%+ knowledge improvement and measurable business impact. Industry-focused curriculum that transforms teams from AI-anxious to AI-champion in weeks, not months.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Three-Tier Training Methodology Section */}
+      <section className="py-20 px-4 bg-black">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Three-Tier Training Methodology
+            </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              Our proven pyramid approach transforms your organization from AI-anxious to AI-champion
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Foundation Level */}
+            <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+              <h3 className="text-2xl font-bold text-white mb-4">Foundation Level (AI Literacy)</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Duration:</strong> 1-2 days</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Audience:</strong> All employees</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Outcome:</strong> Basic AI understanding and confidence</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Champions Level */}
+            <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+              <h3 className="text-2xl font-bold text-white mb-4">Champions Level (AI Application)</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Duration:</strong> 3-5 days</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Audience:</strong> Department leaders and key users</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Outcome:</strong> Hands-on AI tool proficiency</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Strategy Partners Level */}
+            <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+              <h3 className="text-2xl font-bold text-white mb-4">Strategy Partners Level (AI Leadership)</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Duration:</strong> Executive workshops</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Audience:</strong> C-suite and senior management</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-white rounded-full flex-shrink-0"></div>
+                  <span className="text-gray-200"><strong>Outcome:</strong> AI strategy and governance expertise</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -336,23 +412,23 @@ const AITrainingPage: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-6 mb-16">
             <MetricBox 
-              value="Multiple" 
-              label="AI Trainers" 
+              value="+102%" 
+              label="AI Knowledge Improvement" 
               delay={0}
             />
             <MetricBox 
-              value="Multi Industry" 
-              label="Experience" 
+              value="$40M+" 
+              label="Business Impact" 
               delay={200}
             />
             <MetricBox 
-              value="Custom+" 
-              label="Curriculum" 
+              value="97%" 
+              label="Participant Satisfaction" 
               delay={400}
             />
             <MetricBox 
-              value="35%+" 
-              label="Improvement" 
+              value="12+" 
+              label="Use Cases Identified per Program" 
               delay={600}
             />
           </div>
@@ -374,9 +450,12 @@ const AITrainingPage: React.FC = () => {
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Comprehensive AI Education for Every Organizational Level
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+              Industry-Focused Curriculum Examples
             </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto text-center mb-8">
+              All programs include industry-specific use cases and real-world examples
+            </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -391,98 +470,17 @@ const AITrainingPage: React.FC = () => {
               />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Flexible Learning Experiences Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Flexible Learning Experiences Designed for Your Organisation
-            </h2>
-          </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {learningExperiences.slice(0, 3).map((experience, index) => (
-              <LearningExperience
-                key={index}
-                title={experience.title}
-                details={experience.details}
-                delay={index * 150}
-              />
-            ))}
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-6 mt-6">
-            <div className="lg:col-span-1 lg:mx-auto lg:max-w-md">
-              <LearningExperience
-                title={learningExperiences[3].title}
-                details={learningExperiences[3].details}
-                delay={450}
-              />
-            </div>
+          <div className="text-center mt-12">
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+              All programs include hands-on practice with no-code AI tools and real industry scenarios
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Ready to Transform Your Workforce Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Ready to Transform Your Workforce with AI Training?
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-16 mb-12">
-            {consultationColumns.map((column, index) => (
-              <ConsultationColumn
-                key={index}
-                title={column.title}
-                items={column.items}
-                delay={index * 200}
-              />
-            ))}
-          </div>
 
-          {/* Schedule Consultation Button */}
-          <div className="flex justify-center">
-            <button 
-              onClick={handleScheduleConsultation}
-              className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 text-lg"
-            >
-              <span>SCHEDULE CONSULTATION</span>
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </section>
 
-      {/* Hero Text Section */}
-      <section className="py-20 px-4 relative">
-        <div 
-          className="absolute inset-0 w-full h-full"
-          style={{
-            background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 25%, rgba(236, 72, 153, 0.1) 50%, rgba(239, 68, 68, 0.1) 75%, rgba(245, 158, 11, 0.1) 100%)'
-          }}
-        />
-        {/* Wave separator */}
-        <div 
-          className="absolute top-0 left-0 w-full h-1 opacity-30"
-          style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(147, 51, 234, 0.5) 25%, rgba(59, 130, 246, 0.5) 50%, rgba(147, 51, 234, 0.5) 75%, transparent 100%)'
-          }}
-        />
-        
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div className="text-center">
-            <h2 className="text-2xl md:text-4xl font-bold text-white mb-8 leading-tight">
-              Augment your business and workforce potential with AI
-            </h2>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <Footer />

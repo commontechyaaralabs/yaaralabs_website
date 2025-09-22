@@ -551,45 +551,46 @@ const HomePage: React.FC = () => {
 
   const serviceCards = [
     {
-      title: "AI Product Development",
-      subtitle: "Vision To Reality with Expert Engineering",
-      description: "Transform breakthrough ideas into market-ready AI solutions. Our experienced AI teams leverage cutting-edge agentic, machine and deep learning frameworks to build scalable, enterprise-grade products to accelerate innovation cycles and create sustainable competitive advantages.",
+      title: "AI WORKFORCE ENABLEMENT",
+      subtitle: "Build AI-Confident Organizations from Ground Up",
+      description: "Transform every level of your organization with our proven three-tier methodology: AI Literacy (Foundation) → AI Champions (Intermediate) → AI Strategy Partners (Leadership). Our banking-focused curriculum delivers measurable results in weeks, not months.",
       features: [
-        "Custom AI/ML model development and deployment",
-        "Intelligent automation and workflow optimization",
-        "Agentic AI systems and autonomous decision-making"
-      ],
-      buttonText: "EXPLORE AI DEVELOPMENT",
-      onClick: handleAIDevelopmentClick
-    },
-    {
-      title: "Workforce AI Enablement",
-      subtitle: "Building AI-Confident Organizations",
-      description: "Our comprehensive training programs prepare everyone from executives to operations teams to harness AI effectively, ensuring your organization maximizes AI adoption and ROI.",
-      features: [
-        "Executive AI strategy and governance workshops",
-        "Organization-wide AI literacy and adoption programs",
-        "Business leader AI application masterclasses",
-        "Technical team upskilling in AI/ML implementation"
+        "3-tier training pyramid (Foundation → Champions → Strategy Partners)",
+        "Banking-specific use cases and curriculum",
+        "Hands-on learning with no-code AI tools",
+        "100%+ knowledge improvement guaranteed"
       ],
       buttonText: "DISCOVER AI TRAINING",
       onClick: handleAITrainingClick
     },
     {
-      title: "AI Strategy Consulting",
+      title: "AI STRATEGY CONSULTING",
       subtitle: "Navigate Your AI Journey with Expert Guidance",
-      description: "Chart your path to AI transformation with strategic precision. Our senior AI consultants help you identify high-impact opportunities, develop implementation roadmaps, and ensure your AI initiatives deliver measurable business outcomes from day one.",
+      description: "Chart your path to AI transformation with strategic precision. Our senior AI consultants combine boardroom strategy with hands-on implementation experience to ensure your AI initiatives deliver measurable ROI from day one.",
       features: [
         "AI readiness assessment and maturity evaluation",
-        "Strategic roadmap development and prioritization",
-        "Technology architecture design and vendor selection",
+        "Strategic roadmap development with clear milestones",
+        "Technology architecture and vendor selection guidance",
         "ROI optimization and performance measurement"
       ],
       buttonText: "GET AI ASSESSMENT",
       onClick: handleContactClick
     },
     {
-      title: "AI-Powered Data Annotation Services",
+      title: "AI DEVELOPMENT SERVICES",
+      subtitle: "From Vision to Production-Ready AI Solutions",
+      description: "Accelerate your innovation with custom AI solutions built by practitioners who understand both technology and business impact. Our experienced development team creates scalable, enterprise-grade AI systems.",
+      features: [
+        "Custom AI/ML model development and deployment",
+        "Intelligent automation and agentic AI systems",
+        "Enterprise-grade architecture and security",
+        "MLOps and model lifecycle management"
+      ],
+      buttonText: "EXPLORE AI DEVELOPMENT",
+      onClick: handleAIDevelopmentClick
+    },
+    {
+      title: "AI-POWERED DATA ANNOTATION SERVICES",
       subtitle: "Transform Raw Data into AI-Ready Training Sets with Precision and Scale",
       description: "Accelerate your AI model development with expertly annotated datasets that deliver superior performance. Our advanced hybrid methodology combines cutting-edge AI automation with expert human validation, reducing annotation time by 40% while maintaining enterprise-grade accuracy for your machine learning initiatives.",
       features: [
@@ -760,32 +761,131 @@ const HomePage: React.FC = () => {
 
       {/* Main Content */}
       <div className="relative z-30 bg-black main-content">
-        {/* Product Features */}
-        <section id="product-features" className="py-20 px-4">
+        {/* Problem Statement Section */}
+        <section className="py-20 px-4 bg-black">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Why Use Our Platform?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                70% of AI Implementation Failures Are People Problems, Not Technology Issues
+              </h2>
               <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                We don't just build AI systems—we build AI-ready organizations. Proven methodology delivering 100%+ knowledge improvement and measurable business impact for global enterprises.
+                Your teams need AI fluency to unlock the value of your AI investments
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 mb-0">
-              <MetricBox 
-                value="+102%" 
-                label="AI Knowledge Improvement" 
-                delay={0}
-              />
-              <MetricBox 
-                value="+$40M" 
-                label="Business Impact" 
-                delay={200}
-              />
-              <MetricBox 
-                value="97%" 
-                label="Satisfaction Rate" 
-                delay={400}
-              />
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+                <h3 className="text-2xl font-bold text-white mb-4">Skills Gap Crisis</h3>
+                <div className="space-y-3 text-gray-200">
+                  <p className="text-lg font-semibold">78% of banking professionals lack AI literacy</p>
+                  <p className="text-lg font-semibold">60% of executives estimate workforce needs AI reskilling</p>
+                </div>
+                <p className="text-sm text-gray-400 mt-4">Source: BCG 2025, McKinsey studies</p>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+                <h3 className="text-2xl font-bold text-white mb-4">Implementation Challenges</h3>
+                <div className="space-y-3 text-gray-200">
+                  <p className="text-lg font-semibold">Teams struggle to evaluate AI solutions</p>
+                  <p className="text-lg font-semibold">ROI prioritization and use cases get lost</p>
+                </div>
+                <p className="text-sm text-gray-400 mt-4">Source: IBM AI Implementation Report</p>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-8 border border-purple-700">
+                <h3 className="text-2xl font-bold text-white mb-4">Workforce Anxiety</h3>
+                <div className="space-y-3 text-gray-200">
+                  <p className="text-lg font-semibold">61% fear job displacement by AI</p>
+                  <p className="text-lg font-semibold">Resistance to adopting AI solutions</p>
+                </div>
+                <p className="text-sm text-gray-400 mt-4">Source: McKinsey Global AI Survey</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Proof Section */}
+        <section id="product-features" className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Proven Results with Global Enterprises</h2>
+              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Our clients achieve measurable transformation through systematic AI workforce development
+              </p>
+            </div>
+
+            {/* Featured Case Study - Top Indian Bank */}
+            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700 mb-16">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <h3 className="text-3xl font-bold text-white mb-4">Enterprise Transformation Case Study</h3>
+                  <p className="text-gray-300 text-lg mb-6">
+                    Transformed 200+ enterprise professionals into AI champions through our three-tier methodology, delivering measurable business impact and organizational confidence.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
+                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>+102%</div>
+                      <div className="text-sm" style={{ color: '#ffffff' }}>AI Knowledge Improvement</div>
+                    </div>
+                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
+                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>12+</div>
+                      <div className="text-sm" style={{ color: '#ffffff' }}>Use Cases Identified</div>
+                    </div>
+                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
+                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>$40M+</div>
+                      <div className="text-sm" style={{ color: '#ffffff' }}>Business Impact</div>
+                    </div>
+                    <div className="bg-purple-900 bg-opacity-30 rounded-lg p-4 border border-purple-700">
+                      <div className="text-2xl font-bold" style={{ color: '#b90abd' }}>100%</div>
+                      <div className="text-sm" style={{ color: '#ffffff' }}>Participant Improvement</div>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={handleContactClick}
+                    className="px-6 py-3 rounded-lg font-semibold transition-all duration-300"
+                    style={{ backgroundColor: '#b90abd', color: '#ffffff' }}
+                  >
+                    See Our Training Impact
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                    <p className="text-gray-300 italic mb-3">
+                      "Extremely thorough the subjects were. The trainer was fantastic explaining complicated concepts in the most simple way"
+                    </p>
+                    <div className="font-semibold" style={{ color: '#b90abd' }}>EVP, Fortune 500 Company</div>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                    <p className="text-gray-300 italic mb-3">
+                      "The program was very hands-on. Instead of just theory, it highlighted real time use cases and step-by-step practical experience"
+                    </p>
+                    <div className="font-semibold" style={{ color: '#b90abd' }}>SVP, Fortune 500 Company</div>
+                  </div>
+
+                  <div className="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                    <p className="text-gray-300 italic mb-3">
+                      "Very beneficial and really builds confidence in how AI and LLM can be used in day to day work"
+                    </p>
+                    <div className="font-semibold" style={{ color: '#b90abd' }}>VP, Fortune 500 Company</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Trust Bar */}
+            <div className="text-center">
+              <p className="text-gray-400 text-sm mb-6">Trusted by Fortune 500 Companies and Global Enterprises</p>
+              <div className="flex justify-center items-center space-x-8 opacity-60">
+                <div className="text-gray-500 font-semibold">Top Indian Bank</div>
+                <div className="w-px h-6 bg-gray-600"></div>
+                <div className="text-gray-500 font-semibold">Standard Chartered</div>
+                <div className="w-px h-6 bg-gray-600"></div>
+                <div className="text-gray-500 font-semibold">Visa</div>
+              </div>
             </div>
 
           </div>
@@ -815,7 +915,7 @@ const HomePage: React.FC = () => {
         <section id="expertise-section" className="py-20 px-4 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Deep AI Expertise Across Domains</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Deep AI Expertise Across Domains</h2>
               <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
                 Decades of experience from successful enterprise AI implementations
               </p>
@@ -834,77 +934,101 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        {/* The YaaraLabs Advantage Section */}
+        {/* Why YaaraLabs Section */}
         <section className="py-20 px-4 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">The YaaraLabs Advantage</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">AI Practitioners, Not Educators</h2>
               <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Why global leaders choose us as their trusted AI transformation partner
+                Real-world results from a team that builds AI systems, not just teaches about them
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8">
-              {advantageCards.map((advantage, index) => (
-                <AdvantageCard
-                  key={index}
-                  title={advantage.title}
-                  features={advantage.features}
-                  delay={index * 150}
-                  isAlternate={index >= 2} // Bottom row gets alternate styling
-                />
-              ))}
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 border border-gray-700">
+                <h3 className="text-2xl font-bold text-white mb-4">Industry Leadership</h3>
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">Ranjith Melarkode - 26+ years AI/Digital experience</p>
+                      <p className="text-sm">Ex-CTO/SVP with production AI at scale</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">160M+ users (PVR Inox)</p>
+                      <p className="text-sm">Production AI systems at enterprise scale</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">$18M+ verified ROI</p>
+                      <p className="text-sm">Proven AI revenue generation</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 border border-gray-700">
+                <h3 className="text-2xl font-bold text-white mb-4">TheNeural.ai Network</h3>
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">India's premier AI implementation community</p>
+                      <p className="text-sm">Connecting practitioners, not theorists</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">200+ Years combined experience</p>
+                      <p className="text-sm">CTO/CPO network across industries</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">Practitioner Network</p>
+                      <p className="text-sm">Building India's AI implementation ecosystem</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 border border-gray-700">
+                <h3 className="text-2xl font-bold text-white mb-4">Adult Learning Excellence</h3>
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">Competency-based design</p>
+                      <p className="text-sm">Practical industry playbooks and frameworks</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">Hands-on methodology</p>
+                      <p className="text-sm">No-code AI tools for immediate application</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: '#b90abd' }}></div>
+                    <div>
+                      <p className="font-semibold text-white">Measurable outcomes</p>
+                      <p className="text-sm">Tracked across 8 AI knowledge areas</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Driving AI Innovation Section */}
-        <section className="py-20 px-4 bg-black">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Driving AI Innovation Across Global Enterprises</h2>
-              <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Selective Engagements • High-Impact Focus • Innovation-Driven Results
-              </p>
-            </div>
-            
-            <div className="space-y-6">
-              {innovationCards.map((innovation, index) => (
-                <InnovationCard
-                  key={index}
-                  title={innovation.title}
-                  description={innovation.description}
-                  delay={index * 200}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Hero Text Section */}
-        <section className="py-20 px-4 relative">
-          <div 
-            className="absolute inset-0 w-full h-full"
-            style={{
-              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 25%, rgba(236, 72, 153, 0.1) 50%, rgba(239, 68, 68, 0.1) 75%, rgba(245, 158, 11, 0.1) 100%)'
-            }}
-          />
-          {/* Wave separator */}
-          <div 
-            className="absolute top-0 left-0 w-full h-1 opacity-30"
-            style={{
-              background: 'linear-gradient(90deg, transparent 0%, rgba(147, 51, 234, 0.5) 25%, rgba(59, 130, 246, 0.5) 50%, rgba(147, 51, 234, 0.5) 75%, transparent 100%)'
-            }}
-          />
-          
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center">
-              <h2 className="text-2xl md:text-4xl font-bold text-white mb-8 leading-tight">
-                Augment your business and workforce potential with AI
-              </h2>
-            </div>
-          </div>
-        </section>
 
 
         {/* Footer */}

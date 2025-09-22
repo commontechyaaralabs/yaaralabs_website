@@ -496,7 +496,8 @@ const CustomAISolutionsPage: React.FC = () => {
         "ROI-driven development approach",
         "Clear success metrics and KPIs",
         "Business process optimization",
-        "Market-ready solution delivery"
+        "Market-ready solution delivery",
+        "Built for teams trained in our methodology"
       ]
     },
     {
@@ -514,7 +515,8 @@ const CustomAISolutionsPage: React.FC = () => {
         "Collaborative development process",
         "Transparent communication and updates",
         "Knowledge transfer and team enablement",
-        "Long-term strategic support"
+        "Long-term strategic support",
+        "Seamless integration with workforce enablement programs"
       ]
     }
   ];
@@ -549,11 +551,31 @@ const CustomAISolutionsPage: React.FC = () => {
       <section className="relative pt-32 pb-16 px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-16 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Custom AI Solutions That Transform
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+              AI Solutions Built by
               <br />
-              Business Potential
+              Workforce-Trained Teams
             </h1>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+              From concept to production-ready systems. Our development team combines deep technical expertise with proven training in AI workforce enablement.
+            </p>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Supporting your trained workforce with scalable AI solutions
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Development Services Support Section */}
+      <section className="py-20 px-4 bg-black">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Development Services That Support Your AI-Ready Teams
+            </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              Our development services are designed to complement our workforce training programs. We build AI systems that your trained teams can confidently operate, maintain, and expand.
+            </p>
           </div>
         </div>
       </section>
@@ -614,58 +636,12 @@ const CustomAISolutionsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Proven Process Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Proven Process, Exceptional Results
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processPhases.map((phase, index) => (
-              <ProcessPhase
-                key={index}
-                phaseNumber={phase.phaseNumber}
-                title={phase.title}
-                duration={phase.duration}
-                activities={phase.activities}
-                delay={index * 150}
-                hasGradient={phase.hasGradient}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Cutting-Edge AI Technologies Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Cutting-Edge AI Technologies, Enterprise-Ready Solutions
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {techColumns.map((tech, index) => (
-              <TechColumn
-                key={index}
-                title={tech.title}
-                items={tech.items}
-                delay={index * 150}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* The YaaraLabs Development Advantage Section */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
               The YaaraLabs Development Advantage
             </h2>
           </div>
@@ -683,38 +659,6 @@ const CustomAISolutionsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Ready to Build Your AI Solution Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-6" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-              Ready to Build Your AI Solution?
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-16 mb-12">
-            {consultationColumns.map((column, index) => (
-              <ConsultationColumn
-                key={index}
-                title={column.title}
-                items={column.items}
-                delay={index * 200}
-              />
-            ))}
-          </div>
-
-          {/* Schedule Consultation Button */}
-          <div className="flex justify-center">
-            <button 
-              onClick={handleScheduleConsultation}
-              className="bg-gray-200 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 text-base shadow-lg"
-            >
-              <span>SCHEDULE CONSULTATION</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <Footer />

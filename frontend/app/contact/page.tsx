@@ -273,7 +273,8 @@ const ContactPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-purple-700 transition-all duration-300 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-4 rounded-lg font-semibold transition-all duration-300 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ backgroundColor: '#b90abd', color: '#ffffff' }}
               >
                 {isSubmitting ? (
                   <>

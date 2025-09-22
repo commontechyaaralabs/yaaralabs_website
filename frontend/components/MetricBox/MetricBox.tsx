@@ -78,18 +78,21 @@ const MetricBox: React.FC<MetricBoxProps> = ({ value, label, delay }) => {
   return (
     <div 
       ref={boxRef}
-      className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 text-center border border-gray-700 hover:border-pink-500 transition-all duration-500 hover:scale-105 ${
+      className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 text-center border border-gray-700 hover:border-purple-500 transition-all duration-500 hover:scale-105 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       }`}
     >
       <div className="flex items-center justify-center h-16 mb-1">
-        <div className={`font-bold text-pink-400 font-mono text-center leading-none ${
-          /\d/.test(value) ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'
-        }`}>
+        <div 
+          className={`font-bold font-mono text-center leading-none ${
+            /\d/.test(value) ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'
+          }`}
+          style={{ color: '#b90abd' }}
+        >
           {animatedValue}
         </div>
       </div>
-      <div className="text-sm text-gray-300 font-medium text-center leading-tight px-2">
+      <div className="text-sm font-medium text-center leading-tight px-2" style={{ color: '#ffffff' }}>
         {label}
       </div>
     </div>

@@ -41,21 +41,12 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({ className = "" }) => 
           >
             <button 
               onClick={() => {
-                router.push('/product_development');
-                setIsSolutionsOpen(false);
-              }}
-              className="block w-full text-left px-4 py-2 text-white hover:bg-gray-700 transition-colors"
-            >
-              AI Product Development
-            </button>
-            <button 
-              onClick={() => {
                 router.push('/AI_Training');
                 setIsSolutionsOpen(false);
               }}
               className="block w-full text-left px-4 py-2 text-white hover:bg-gray-700 transition-colors"
             >
-              Workforce AI Enablement
+              AI Training & Enablement
             </button>
             <button 
               onClick={() => {
@@ -68,12 +59,12 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({ className = "" }) => 
             </button>
             <button 
               onClick={() => {
-                router.push('/Data_Annotation');
+                router.push('/product_development');
                 setIsSolutionsOpen(false);
               }}
               className="block w-full text-left px-4 py-2 text-white hover:bg-gray-700 transition-colors"
             >
-              AI-Powered Data Annotation Services
+              AI Development Services
             </button>
           </div>
         )}
@@ -101,6 +92,13 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({ className = "" }) => 
         className="text-white hover:text-pink-400 transition-colors"
       >
         Contact Us
+      </button>
+      <button
+        onClick={() => router.push('/contact')}
+        className="px-4 py-2 rounded-lg font-semibold transition-all duration-300"
+        style={{ backgroundColor: '#b90abd', color: '#ffffff' }}
+      >
+        Get AI Assessment
       </button>
     </div>
   );
