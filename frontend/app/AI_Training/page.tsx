@@ -4,14 +4,10 @@ import React, { useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import {Header} from '@/components/Header/Header';
 import {Footer} from '@/components/Footer';
+import {MetricBox} from '@/components/MetricBox';
 import '../globals.css';
 import { useRouter } from 'next/navigation';
 
-interface MetricBoxProps {
-  value: string;
-  label: string;
-  delay: number;
-}
 
 interface EducationTrackProps {
   trackNumber: string;
@@ -33,79 +29,6 @@ interface ConsultationColumnProps {
   delay: number;
 }
 
-const MetricBox: React.FC<MetricBoxProps> = ({ value, label, delay }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [animatedValue, setAnimatedValue] = React.useState("0");
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-  const boxRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setTimeout(() => {
-              setIsVisible(true);
-              setHasAnimated(true);
-            }, delay);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (boxRef.current) {
-      observer.observe(boxRef.current);
-    }
-
-    return () => {
-      if (boxRef.current) {
-        observer.unobserve(boxRef.current);
-      }
-    };
-  }, [delay, hasAnimated]);
-
-  React.useEffect(() => {
-    if (!isVisible) return;
-
-    const numericValue = parseFloat(value.replace(/[+$%]/g, ''));
-    const suffix = value.replace(/[\d.]/g, '');
-    const duration = 1000;
-    const steps = 60;
-    const stepDuration = duration / steps;
-    const increment = numericValue / steps;
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      currentStep++;
-      const currentValue = Math.min(increment * currentStep, numericValue);
-      setAnimatedValue(Math.floor(currentValue) + suffix);
-
-      if (currentStep >= steps) {
-        clearInterval(interval);
-        setAnimatedValue(value);
-      }
-    }, stepDuration);
-
-    return () => clearInterval(interval);
-  }, [isVisible, value]);
-
-  return (
-    <div 
-      ref={boxRef}
-      className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 text-center border border-gray-700 hover:border-purple-500 transition-all duration-500 hover:scale-105 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
-    >
-      <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2 font-mono">
-        {animatedValue}
-      </div>
-      <div className="text-sm text-gray-300 font-medium">
-        {label}
-      </div>
-    </div>
-  );
-};
 
 const EducationTrack: React.FC<EducationTrackProps> = ({ trackNumber, title, items, delay, hasBlueBackground }) => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -282,8 +205,7 @@ const AITrainingPage: React.FC = () => {
   };
 
   const handleScheduleConsultation = () => {
-    // Add your consultation scheduling logic here
-    console.log('Schedule consultation clicked');
+    router.push('/contact');
   };
 
   const educationTracks = [

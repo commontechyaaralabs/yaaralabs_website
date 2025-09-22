@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Brain, Mail, MessageSquare, Ticket, TrendingUp, ArrowRight, Database, Settings, Shield, Zap, Phone, Share2 } from 'lucide-react';
 import {Header} from '@/components/Header/Header';
 import {Footer} from '@/components/Footer';
+import {MetricBox} from '@/components/MetricBox';
 import * as THREE from 'three';
 import './globals.css';
 import { useRouter } from 'next/navigation';
@@ -15,11 +16,6 @@ declare global {
   }
 }
 
-interface MetricBoxProps {
-  value: string;
-  label: string;
-  delay: number;
-}
 
 interface ServiceCardProps {
   title: string;
@@ -50,79 +46,6 @@ interface InnovationCardProps {
   delay: number;
 }
 
-const MetricBox: React.FC<MetricBoxProps> = ({ value, label, delay }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [animatedValue, setAnimatedValue] = React.useState("0");
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-  const boxRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setTimeout(() => {
-              setIsVisible(true);
-              setHasAnimated(true);
-            }, delay);
-          }
-        });
-      },
-      { threshold: 0.3 } // Trigger when 30% of the element is visible
-    );
-
-    if (boxRef.current) {
-      observer.observe(boxRef.current);
-    }
-
-    return () => {
-      if (boxRef.current) {
-        observer.unobserve(boxRef.current);
-      }
-    };
-  }, [delay, hasAnimated]);
-
-  React.useEffect(() => {
-    if (!isVisible) return;
-
-    const numericValue = parseFloat(value.replace(/[+$%]/g, ''));
-    const suffix = value.replace(/[\d.]/g, '');
-    const duration = 1000; // 1 second
-    const steps = 60; // 60 steps for smooth animation
-    const stepDuration = duration / steps;
-    const increment = numericValue / steps;
-
-    let currentStep = 0;
-    const interval = setInterval(() => {
-      currentStep++;
-      const currentValue = Math.min(increment * currentStep, numericValue);
-      setAnimatedValue(Math.floor(currentValue) + suffix);
-
-      if (currentStep >= steps) {
-        clearInterval(interval);
-        setAnimatedValue(value); // Ensure final value is exact
-      }
-    }, stepDuration);
-
-    return () => clearInterval(interval);
-  }, [isVisible, value]);
-
-  return (
-    <div 
-      ref={boxRef}
-      className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 text-center border border-gray-700 hover:border-pink-500 transition-all duration-500 hover:scale-105 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
-    >
-      <div className="text-4xl md:text-5xl font-bold text-pink-400 mb-2 font-mono">
-        {animatedValue}
-      </div>
-      <div className="text-lg text-gray-300 font-medium">
-        {label}
-      </div>
-    </div>
-  );
-};
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ title, subtitle, description, features, buttonText, delay, onClick }) => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -516,6 +439,30 @@ const HomePage: React.FC = () => {
     };
   };
 
+  // Handle hash navigation for expertise section
+  useEffect(() => {
+    const handleHashNavigation = () => {
+      if (window.location.hash === '#expertise-section') {
+        const expertiseSection = document.getElementById('expertise-section');
+        if (expertiseSection) {
+          setTimeout(() => {
+            expertiseSection.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    };
+
+    // Check for hash on component mount
+    handleHashNavigation();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashNavigation);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashNavigation);
+    };
+  }, []);
+
   // Initialize Three.js background
   useEffect(() => {
 
@@ -567,6 +514,10 @@ const HomePage: React.FC = () => {
 
   const handleTermsConditionsClick = () => {
     router.push('/Terms-and-conditions');
+  };
+
+  const handleContactClick = () => {
+    router.push('/contact');
   };
 
   const productFeatures = [
@@ -634,7 +585,8 @@ const HomePage: React.FC = () => {
         "Technology architecture design and vendor selection",
         "ROI optimization and performance measurement"
       ],
-      buttonText: "GET AI ASSESSMENT"
+      buttonText: "GET AI ASSESSMENT",
+      onClick: handleContactClick
     },
     {
       title: "AI-Powered Data Annotation Services",
@@ -860,7 +812,7 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Deep AI Expertise Section */}
-        <section className="py-20 px-4 bg-black">
+        <section id="expertise-section" className="py-20 px-4 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Deep AI Expertise Across Domains</h2>
