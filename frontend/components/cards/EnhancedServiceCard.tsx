@@ -88,7 +88,7 @@ const EnhancedServiceCard: React.FC<EnhancedServiceCardProps> = ({
         whileHover="hover"
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
-        className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-500 overflow-hidden"
+        className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-500 overflow-hidden h-full flex flex-col"
         style={{
           backgroundImage: `radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)`
         }}
@@ -130,9 +130,9 @@ const EnhancedServiceCard: React.FC<EnhancedServiceCardProps> = ({
           ))}
         </motion.div>
 
-        <div className="relative z-10 space-y-6">
+        <div className="relative z-10 flex flex-col h-full">
           {/* Icon and Title Section */}
-          <div className="flex items-start space-x-4">
+          <div className="flex items-start space-x-4 mb-6">
             {icon && (
               <motion.div
                 variants={iconVariants}
@@ -165,7 +165,7 @@ const EnhancedServiceCard: React.FC<EnhancedServiceCardProps> = ({
           
           {/* Description */}
           <motion.p 
-            className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300"
+            className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300 mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: (delay / 1000) + 0.3, duration: 0.5 }}
@@ -174,7 +174,7 @@ const EnhancedServiceCard: React.FC<EnhancedServiceCardProps> = ({
           </motion.p>
           
           {/* Features List */}
-          <div className="space-y-3">
+          <div className="space-y-3 mb-6 flex-1">
             {features.map((feature, index) => (
               <motion.div 
                 key={index} 
@@ -198,13 +198,13 @@ const EnhancedServiceCard: React.FC<EnhancedServiceCardProps> = ({
             ))}
           </div>
           
-          {/* CTA Button */}
+          {/* CTA Button - This will stick to the bottom */}
           <motion.button 
             variants={buttonVariants}
             whileHover="hover"
             whileTap={{ scale: 0.95 }}
             onClick={onClick}
-            className="group/button w-full bg-gradient-to-r from-white to-gray-100 text-gray-900 px-6 py-4 rounded-lg font-semibold hover:from-purple-50 hover:to-pink-50 transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer relative overflow-hidden"
+            className="group/button w-full bg-gradient-to-r from-white to-gray-100 text-gray-900 px-6 py-4 rounded-lg font-semibold hover:from-purple-50 hover:to-pink-50 transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer relative overflow-hidden mt-auto"
           >
             {/* Button shine effect */}
             <motion.div

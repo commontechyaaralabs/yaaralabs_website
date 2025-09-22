@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface EnhancedHeaderProps {
   className?: string;
@@ -118,11 +119,18 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center space-x-3 cursor-pointer"
             onClick={() => router.push('/')}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">Y</span>
+            <div className="w-12 h-12 relative">
+              <Image
+                src="/yaaralogo-circle.png"
+                alt="YAARA Logo"
+                fill
+                className="object-contain"
+                priority
+                sizes="48px"
+              />
             </div>
             <span className="text-white font-bold text-xl">YAARA</span>
           </motion.div>

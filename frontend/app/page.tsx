@@ -505,7 +505,7 @@ const HomePage: React.FC = () => {
   };
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push('/contact');
   };
 
   const handleAIDevelopmentClick = () => {
@@ -947,20 +947,21 @@ const HomePage: React.FC = () => {
               </div>
             </QuickReveal>
             
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-8 items-stretch">
               {serviceCards.map((service, index) => (
-                <EnhancedServiceCard
-                  key={service.id}
-                  title={service.title}
-                  subtitle={service.subtitle}
-                  description={service.description}
-                  features={service.features}
-                  buttonText={service.buttonText}
-                  delay={index * 100}
-                  onClick={service.onClick}
-                  icon={service.icon}
-                  gradient={service.gradient}
-                />
+                <div key={service.id} className="flex">
+                  <EnhancedServiceCard
+                    title={service.title}
+                    subtitle={service.subtitle}
+                    description={service.description}
+                    features={service.features}
+                    buttonText={service.buttonText}
+                    delay={index * 100}
+                    onClick={service.onClick}
+                    icon={service.icon}
+                    gradient={service.gradient}
+                  />
+                </div>
               ))}
             </div>
           </div>
