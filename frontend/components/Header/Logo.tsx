@@ -11,7 +11,7 @@ const Logo: React.FC<LogoProps> = ({ className = "" }) => {
       <div className="w-12 h-12 relative">
         <Image
           src="/yaaralogo-circle.png"
-          alt="YAARA Logo"
+          alt="YAARALABS Logo"
           fill
           className="object-contain"
           priority

@@ -125,14 +125,14 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             <div className="w-12 h-12 relative">
               <Image
                 src="/yaaralogo-circle.png"
-                alt="YAARA Logo"
+                alt="YAARALABS Logo"
                 fill
                 className="object-contain"
                 priority
                 sizes="48px"
               />
             </div>
-            <span className="text-white font-bold text-xl">YAARA</span>
+            <span className="text-white font-bold text-xl">YAARALABS</span>
           </motion.div>
 
           {/* Desktop Navigation */}

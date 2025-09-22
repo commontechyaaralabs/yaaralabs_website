@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "YAARA - Your AI Experts",
+  title: "YAARALABS - Your AI Experts",
   description: "Transform your business with AI-powered insights from customer communications",
   icons: {
     icon: '/yaaralogo-circle.png',
