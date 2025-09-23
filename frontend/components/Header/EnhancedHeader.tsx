@@ -256,7 +256,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
               className="lg:hidden mt-4 overflow-hidden"
               data-mobile-menu
             >
-              <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700 relative z-50">
+              <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700 relative z-50" style={{pointerEvents: 'auto'}}>
                 {navigationItems.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -270,9 +270,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                       <div>
                         <button
                           className="flex items-center justify-between w-full text-white py-2"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
+                          onClick={() => {
                             console.log('Mobile Solutions button clicked, current state:', isSolutionsOpen);
                             setIsSolutionsOpen(!isSolutionsOpen);
                           }}
@@ -280,38 +278,47 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                           <span>{item.label}</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${isSolutionsOpen ? 'rotate-180' : ''}`} />
                         </button>
-                        {isSolutionsOpen && (
-                          <div className="ml-4 mt-2 space-y-2 relative z-50">
-                            {item.dropdownItems?.map((dropdownItem) => (
-                              <button
-                                key={dropdownItem.label}
-                                className="block w-full text-left text-gray-300 hover:text-purple-400 py-2 px-2 rounded transition-colors"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  console.log('Mobile dropdown clicked:', dropdownItem.label, dropdownItem.href);
-                                  
-                                  // Close menus first
-                                  setIsSolutionsOpen(false);
-                                  setIsMobileMenuOpen(false);
-                                  
-                                  // Add a small delay to ensure state updates are processed
-                                  setTimeout(() => {
-                                    // Try router.push first, with fallback to window.location
-                                    try {
+                        <AnimatePresence>
+                          {isSolutionsOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="ml-4 mt-2 space-y-2 relative z-50 overflow-hidden"
+                              style={{pointerEvents: 'auto'}}
+                            >
+                              {item.dropdownItems?.map((dropdownItem, idx) => (
+                                <motion.div
+                                  key={dropdownItem.label}
+                                  initial={{ opacity: 0, x: -10 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: idx * 0.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  <button
+                                    type="button"
+                                    className="block w-full text-left text-gray-300 hover:text-purple-400 hover:bg-gray-700 py-2 px-2 rounded transition-colors relative z-50 cursor-pointer touch-manipulation"
+                                    onTouchStart={() => console.log('Touch start:', dropdownItem.label)}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      console.log('Mobile dropdown clicked:', dropdownItem.label, dropdownItem.href);
+                                      
+                                      // Close menus first
+                                      setIsSolutionsOpen(false);
+                                      setIsMobileMenuOpen(false);
+                                      
+                                      // Navigate immediately
                                       router.push(dropdownItem.href);
-                                    } catch (error) {
-                                      console.error('Router push failed, using window.location:', error);
-                                      window.location.href = dropdownItem.href;
-                                    }
-                                  }, 100);
-                                }}
-                              >
-                                {dropdownItem.label}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                                    }}
+                                  >
+                                    {dropdownItem.label}
+                                  </button>
+                                </motion.div>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     ) : (
                       <button
