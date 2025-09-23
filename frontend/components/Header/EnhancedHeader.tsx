@@ -44,9 +44,24 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
       }
     };
 
+    const handleMobileMenuClickOutside = (event: MouseEvent) => {
+      const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
+      const mobileMenu = document.querySelector('[data-mobile-menu]');
+      
+      if (mobileMenuButton && mobileMenu && 
+          !mobileMenuButton.contains(event.target as Node) && 
+          !mobileMenu.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+        setIsSolutionsOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleMobileMenuClickOutside);
+    
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleMobileMenuClickOutside);
     };
   }, []);
 
@@ -218,7 +233,13 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="lg:hidden text-white p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            data-mobile-menu-button
+            onClick={() => {
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+              if (isMobileMenuOpen) {
+                setIsSolutionsOpen(false);
+              }
+            }}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </motion.button>
@@ -233,6 +254,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
               animate="visible"
               exit="hidden"
               className="lg:hidden mt-4 overflow-hidden"
+              data-mobile-menu
             >
               <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700">
                 {navigationItems.map((item, index) => (
@@ -260,6 +282,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                                 className="block w-full text-left text-gray-300 hover:text-purple-400 py-1"
                                 onClick={() => {
                                   router.push(dropdownItem.href);
+                                  setIsSolutionsOpen(false);
                                   setIsMobileMenuOpen(false);
                                 }}
                               >
@@ -275,6 +298,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                         onClick={() => {
                           item.onClick?.();
                           setIsMobileMenuOpen(false);
+                          setIsSolutionsOpen(false);
                         }}
                       >
                         {item.label}
@@ -293,6 +317,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                   onClick={() => {
                     onLoginClick?.();
                     setIsMobileMenuOpen(false);
+                    setIsSolutionsOpen(false);
                   }}
                 >
                   Get AI Assessment

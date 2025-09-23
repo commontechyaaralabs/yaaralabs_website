@@ -498,9 +498,9 @@ const HomePage: React.FC = () => {
   }, []);
 
   const scrollToFeatures = () => {
-    const featuresSection = document.getElementById('product-features');
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    const aiSolutionsSection = document.getElementById('ai-solutions-section');
+    if (aiSolutionsSection) {
+      aiSolutionsSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -936,7 +936,7 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Enhanced Service Cards Section */}
-        <section className="pt-0 pb-20 px-4 bg-black">
+        <section id="ai-solutions-section" className="pt-0 pb-20 px-4 bg-black">
           <div className="max-w-7xl mx-auto">
             <QuickReveal direction="up" delay={0} duration={0.6}>
               <div className="text-center mb-16">
