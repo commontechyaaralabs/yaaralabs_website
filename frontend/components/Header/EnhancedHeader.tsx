@@ -218,16 +218,6 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
           </div>
 
           {/* CTA Button */}
-          <div className="hidden lg:block">
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(185, 10, 189, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-              onClick={onLoginClick}
-            >
-              Get AI Assessment
-            </motion.button>
-          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -235,8 +225,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             className="lg:hidden text-white p-3 relative z-50 cursor-pointer touch-manipulation bg-gray-800 bg-opacity-20 rounded-md hover:bg-gray-700 hover:bg-opacity-30 transition-all duration-200 active:scale-95"
             data-mobile-menu-button
             style={{ pointerEvents: 'auto', minHeight: '44px', minWidth: '44px' }}
-            onTouchStart={(e) => {
-              e.preventDefault();
+            onTouchStart={() => {
               console.log('Hamburger touch start');
             }}
             onClick={(e) => {
@@ -344,22 +333,6 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                     )}
                   </motion.div>
                 ))}
-                <motion.button
-                  variants={navItemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={navigationItems.length}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-4 py-3 rounded-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white mt-4"
-                  onClick={() => {
-                    onLoginClick?.();
-                    setIsMobileMenuOpen(false);
-                    setIsSolutionsOpen(false);
-                  }}
-                >
-                  Get AI Assessment
-                </motion.button>
               </div>
             </motion.div>
           )}

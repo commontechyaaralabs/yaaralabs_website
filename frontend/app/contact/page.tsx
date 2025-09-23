@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Mail, Phone, MapPin, Send, ArrowRight, Brain, Target, Award, TrendingUp, Users, Clock, CheckCircle } from 'lucide-react';
 import { EnhancedHeader } from '@/components/Header/EnhancedHeader';
 import { Footer } from '@/components/Footer';
@@ -9,6 +9,7 @@ import QuickReveal from '@/components/animations/QuickReveal';
 import BackToTopButton from '@/components/ui/BackToTopButton';
 import emailjs from '@emailjs/browser';
 import '../globals.css';
+import { useLeftAlignedCheckbox } from '@/components/hooks/useLeftAlignedCheckbox';
 
 // Add custom styles for dark dropdown
 const dropdownStyles = `
@@ -39,6 +40,8 @@ interface ContactFormData {
 
 const ContactPage: React.FC = () => {
   const router = useRouter();
+  const checkboxContainerRef = useRef<HTMLDivElement>(null);
+  useLeftAlignedCheckbox(checkboxContainerRef);
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -49,7 +52,7 @@ const ContactPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push('/contact');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -249,29 +252,27 @@ const ContactPage: React.FC = () => {
               />
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
+            <div ref={checkboxContainerRef} className="space-y-3">
+              {/* Privacy Policy + TOS */}
+              <label htmlFor="privacy" className="text-sm text-white cursor-pointer">
                 <input
                   type="checkbox"
                   id="privacy"
                   required
-                  className="mt-1 w-4 h-4 text-purple-600 bg-transparent border-white rounded focus:ring-purple-500 focus:ring-2"
+                  className="text-purple-600 bg-transparent border-white rounded focus:ring-purple-500 focus:ring-2"
                 />
-                <label htmlFor="privacy" className="text-sm text-white">
-                  I agree to the Privacy Policy and Terms of Service *
-                </label>
-              </div>
-              
-              <div className="flex items-start space-x-3">
+                <span>I agree to the Privacy Policy and Terms of Service *</span>
+              </label>
+
+              {/* Consent */}
+              <label htmlFor="consent" className="text-sm text-white cursor-pointer">
                 <input
                   type="checkbox"
                   id="consent"
-                  className="mt-1 w-4 h-4 text-purple-600 bg-transparent border-white rounded focus:ring-purple-500 focus:ring-2"
+                  className="text-purple-600 bg-transparent border-white rounded focus:ring-purple-500 focus:ring-2"
                 />
-                <label htmlFor="consent" className="text-sm text-white">
-                  I consent to being contacted about AI Solutions and Services *
-                </label>
-              </div>
+                <span>I consent to being contacted about AI Solutions and Services *</span>
+              </label>
             </div>
 
             <div className="text-center">

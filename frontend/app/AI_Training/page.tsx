@@ -205,7 +205,7 @@ const AITrainingPage: React.FC = () => {
   const router = useRouter();
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push('/contact');
   };
 
   const handleScheduleConsultation = () => {

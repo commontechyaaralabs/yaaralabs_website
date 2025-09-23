@@ -208,31 +208,27 @@ const MobileOptimizedHeader: React.FC<MobileOptimizedHeaderProps> = ({
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(185, 10, 189, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-sm sm:text-base"
-              onClick={onLoginClick}
-            >
-              Get AI Assessment
-            </motion.button>
-          </div>
 
           {/* Mobile Menu Button */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="lg:hidden text-white p-2"
+          <button
+            type="button"
+            className="lg:hidden text-white p-3 relative z-50 cursor-pointer touch-manipulation bg-gray-800 bg-opacity-20 rounded-md hover:bg-gray-700 hover:bg-opacity-30 transition-all duration-200 active:scale-95"
             data-mobile-menu-button
-            onClick={toggleMenu}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            style={{ pointerEvents: 'auto', minHeight: '44px', minWidth: '44px' }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('MobileOptimized hamburger clicked, current state:', isMenuOpen);
+              toggleMenu();
+            }}
+            onTouchStart={() => {
+              console.log('MobileOptimized hamburger touch start');
+            }}
+            aria-label="Toggle mobile menu"
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </motion.button>
+          </button>
         </div>
 
         {/* Mobile Menu */}
@@ -245,11 +241,9 @@ const MobileOptimizedHeader: React.FC<MobileOptimizedHeaderProps> = ({
               exit="hidden"
               className="lg:hidden mt-4 overflow-hidden"
               data-mobile-menu
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              style={{ pointerEvents: 'auto' }}
             >
-              <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700">
+              <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700" style={{ pointerEvents: 'auto' }}>
                 {navigationItems.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -262,23 +256,39 @@ const MobileOptimizedHeader: React.FC<MobileOptimizedHeaderProps> = ({
                     {item.hasDropdown ? (
                       <div>
                         <button
-                          className="flex items-center justify-between w-full text-white py-3 px-2 rounded transition-colors hover:bg-gray-700"
-                          onClick={() => toggleDropdown(item.label)}
-                          onTouchStart={handleTouchStart}
-                          onTouchEnd={handleTouchEnd}
+                          type="button"
+                          className="flex items-center justify-between w-full text-white py-3 px-2 rounded transition-colors hover:bg-gray-700 cursor-pointer touch-manipulation"
+                          style={{ pointerEvents: 'auto', minHeight: '44px' }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Mobile Solutions dropdown clicked:', item.label);
+                            toggleDropdown(item.label);
+                          }}
+                          onTouchStart={() => {
+                            console.log('Mobile Solutions touch start:', item.label);
+                          }}
                         >
                           <span>{item.label}</span>
                           <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
                         </button>
                         {activeDropdown === item.label && (
-                          <div className="ml-4 mt-2 space-y-2 relative z-50">
+                          <div className="ml-4 mt-2 space-y-2 relative z-50 bg-gray-900 bg-opacity-50 rounded-md p-2" style={{ pointerEvents: 'auto' }}>
                             {item.dropdownItems?.map((dropdownItem) => (
                               <button
                                 key={dropdownItem.label}
-                                className="block w-full text-left text-gray-300 hover:text-purple-400 py-2 px-2 rounded transition-colors"
-                                onClick={() => handleNavigation(dropdownItem.href)}
-                                onTouchStart={handleTouchStart}
-                                onTouchEnd={handleTouchEnd}
+                                type="button"
+                                className="block w-full text-left text-gray-300 hover:text-purple-400 hover:bg-gray-700 py-2 px-2 rounded transition-colors cursor-pointer touch-manipulation relative z-50"
+                                style={{ pointerEvents: 'auto', minHeight: '40px' }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  console.log('Mobile dropdown item clicked:', dropdownItem.label, dropdownItem.href);
+                                  handleNavigation(dropdownItem.href);
+                                }}
+                                onTouchStart={() => {
+                                  console.log('Mobile dropdown item touch start:', dropdownItem.label);
+                                }}
                               >
                                 {dropdownItem.label}
                               </button>
@@ -288,35 +298,28 @@ const MobileOptimizedHeader: React.FC<MobileOptimizedHeaderProps> = ({
                       </div>
                     ) : (
                       <button
-                        className="block w-full text-left text-white hover:text-purple-400 py-3 px-2 rounded transition-colors"
-                        onClick={() => {
-                          item.onClick ? item.onClick() : handleNavigation(item.href || '/');
+                        type="button"
+                        className="block w-full text-left text-white hover:text-purple-400 hover:bg-gray-700 py-3 px-2 rounded transition-colors cursor-pointer touch-manipulation"
+                        style={{ pointerEvents: 'auto', minHeight: '44px' }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log('Mobile nav item clicked:', item.label, 'href:', item.href, 'hasOnClick:', !!item.onClick);
+                          if (item.onClick) {
+                            item.onClick();
+                          } else {
+                            handleNavigation(item.href || '/');
+                          }
                         }}
-                        onTouchStart={handleTouchStart}
-                        onTouchEnd={handleTouchEnd}
+                        onTouchStart={() => {
+                          console.log('Mobile nav item touch start:', item.label);
+                        }}
                       >
                         {item.label}
                       </button>
                     )}
                   </motion.div>
                 ))}
-                <motion.button
-                  variants={navItemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={navigationItems.length}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-4 py-3 rounded-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white mt-4"
-                  onClick={() => {
-                    onLoginClick?.();
-                    closeMenu();
-                  }}
-                  onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd}
-                >
-                  Get AI Assessment
-                </motion.button>
               </div>
             </motion.div>
           )}

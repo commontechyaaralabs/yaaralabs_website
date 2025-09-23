@@ -64,8 +64,12 @@ export const useMobileGestures = (options: UseMobileGesturesOptions = {}): Gestu
   const lastYRef = useRef<number>(0);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (preventDefault) {
-      e.preventDefault();
+    if (preventDefault && e.cancelable) {
+      try {
+        e.preventDefault();
+      } catch (error) {
+        console.warn('Unable to preventDefault in touch event:', error);
+      }
     }
 
     const touch = e.touches[0];
@@ -93,8 +97,12 @@ export const useMobileGestures = (options: UseMobileGesturesOptions = {}): Gestu
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (!gestureState.isDragging) return;
 
-    if (preventDefault) {
-      e.preventDefault();
+    if (preventDefault && e.cancelable) {
+      try {
+        e.preventDefault();
+      } catch (error) {
+        console.warn('Unable to preventDefault in touch move event:', error);
+      }
     }
 
     const touch = e.touches[0];
@@ -133,8 +141,12 @@ export const useMobileGestures = (options: UseMobileGesturesOptions = {}): Gestu
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
     if (!gestureState.isDragging) return;
 
-    if (preventDefault) {
-      e.preventDefault();
+    if (preventDefault && e.cancelable) {
+      try {
+        e.preventDefault();
+      } catch (error) {
+        console.warn('Unable to preventDefault in touch end event:', error);
+      }
     }
 
     const { deltaX, deltaY, direction, velocity } = gestureState;

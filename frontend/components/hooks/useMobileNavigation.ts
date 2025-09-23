@@ -131,18 +131,75 @@ export const useMobileNavigation = (): MobileNavigationState & MobileNavigationA
 
   // Scroll to section handler
   const handleScrollToSection = useCallback((sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerHeight = 80; // Adjust based on your header height
-      const elementTop = element.offsetTop - headerHeight;
-      
-      window.scrollTo({
-        top: elementTop,
-        behavior: 'smooth'
-      });
-    }
+    console.log('handleScrollToSection called with:', sectionId);
+    
+    // Close menu first and ensure it's fully closed before scrolling
     closeMenu();
-  }, [closeMenu]);
+    
+    // Check if we're on the home page
+    if (window.location.pathname === '/') {
+      // We're on the home page, scroll to section
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          console.log('Found element for scrolling:', sectionId);
+          console.log('Element details:', {
+            tagName: element.tagName,
+            id: element.id,
+            className: element.className,
+            innerHTML: element.innerHTML.substring(0, 100) + '...'
+          });
+          
+          // Get current scroll position for reference
+          const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+          
+          // Calculate the exact position accounting for the fixed header
+          const headerHeight = 100; // Increased header height for better visibility
+          const elementPosition = element.offsetTop;
+          const scrollPosition = elementPosition - headerHeight;
+          
+          console.log('Current scroll:', currentScroll, 'Element position:', elementPosition, 'Target scroll:', scrollPosition);
+          
+          // Let's also check what's at the target position
+          const elementsAtTarget = document.elementsFromPoint(window.innerWidth / 2, headerHeight);
+          console.log('Elements at target position:', elementsAtTarget.map(el => ({tag: el.tagName, id: el.id, class: el.className})));
+          
+          // Use scrollIntoView with custom positioning for mobile
+          try {
+            // First, try the standard approach but with a small adjustment
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            
+            // Then adjust for the header after scrolling starts
+            setTimeout(() => {
+              const currentElementPosition = element.getBoundingClientRect().top;
+              const adjustment = currentElementPosition - 120; // Account for fixed header + padding
+              
+              if (Math.abs(adjustment) > 10) { // Only adjust if significantly off
+                window.scrollBy({
+                  top: adjustment,
+                  behavior: 'smooth'
+                });
+                console.log('Applied scroll adjustment:', adjustment);
+              }
+            }, 100);
+            
+            console.log('Used scrollIntoView with adjustment');
+          } catch (error) {
+            console.log('Scroll error:', error);
+          }
+        } else {
+          console.warn('Section not found:', sectionId);
+        }
+      }, 500); // Adequate delay for menu to close completely
+    } else {
+      // We're on a different page, navigate to home page with hash
+      console.log('Navigating to home page with hash:', `/#${sectionId}`);
+      router.push(`/#${sectionId}`);
+    }
+  }, [router, closeMenu]);
 
   // Back to top handler
   const handleBackToTop = useCallback(() => {
