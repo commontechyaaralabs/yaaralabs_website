@@ -33,7 +33,7 @@ export const useMobileNavigation = (): MobileNavigationState & MobileNavigationA
     lastScrollY: 0,
   });
 
-  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Handle scroll detection
   const handleScroll = useCallback(() => {
@@ -153,7 +153,7 @@ export const useMobileNavigation = (): MobileNavigationState & MobileNavigationA
   }, []);
 
   // Click outside handler
-  const handleClickOutside = useCallback((event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: Event) => {
     const target = event.target as HTMLElement;
     const isMenuButton = target.closest('[data-mobile-menu-button]');
     const isMenu = target.closest('[data-mobile-menu]');
