@@ -127,9 +127,10 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             ? 'bg-transparent' 
             : 'bg-black'
       } ${className}`}
+      style={{ pointerEvents: 'auto' }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-4" style={{ pointerEvents: 'auto' }}>
+        <div className="flex items-center justify-between" style={{ pointerEvents: 'auto' }}>
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -229,20 +230,29 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
           </div>
 
           {/* Mobile Menu Button */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="lg:hidden text-white p-2"
+          <button
+            type="button"
+            className="lg:hidden text-white p-3 relative z-50 cursor-pointer touch-manipulation bg-gray-800 bg-opacity-20 rounded-md hover:bg-gray-700 hover:bg-opacity-30 transition-all duration-200 active:scale-95"
             data-mobile-menu-button
-            onClick={() => {
+            style={{ pointerEvents: 'auto', minHeight: '44px', minWidth: '44px' }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              console.log('Hamburger touch start');
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('Hamburger clicked, current state:', isMobileMenuOpen);
               setIsMobileMenuOpen(!isMobileMenuOpen);
               if (isMobileMenuOpen) {
                 setIsSolutionsOpen(false);
               }
             }}
+            aria-label="Toggle mobile menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </motion.button>
+          </button>
         </div>
 
         {/* Mobile Menu */}
