@@ -3,6 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Brain, Mail, MessageSquare, Ticket, TrendingUp, ArrowRight, Database, Settings, Shield, Zap, Phone, Share2, Users, Target, Award, Globe } from 'lucide-react';
 import {EnhancedHeader} from '@/components/Header/EnhancedHeader';
+import {MobileOptimizedHeader} from '@/components/Header/MobileOptimizedHeader';
+import { useMobileView } from '@/components/hooks/useMobileView';
+import { useMobileOptimization } from '@/components/hooks/useMobileOptimization';
 import {Footer} from '@/components/Footer';
 import EnhancedFooter from '@/components/Footer/EnhancedFooter';
 import {MetricBox} from '@/components/MetricBox';
@@ -311,6 +314,10 @@ const HomePage: React.FC = () => {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const animationFrameRef = useRef<number>(0);
   const [animationOpacity, setAnimationOpacity] = useState(0);
+  
+  // Mobile optimization hooks
+  const { isMobile, isTablet, touchDevice, screenWidth } = useMobileView();
+  const { optimizeForMobile, preloadCriticalResources, lazyLoadImages } = useMobileOptimization();
 
   const initShaderBackground = () => {
     if (!containerRef.current || !window.THREE) return;
@@ -470,6 +477,15 @@ const HomePage: React.FC = () => {
       window.removeEventListener('hashchange', handleHashNavigation);
     };
   }, []);
+
+  // Mobile optimization effects
+  useEffect(() => {
+    if (isMobile || isTablet) {
+      optimizeForMobile();
+      preloadCriticalResources();
+      lazyLoadImages();
+    }
+  }, [isMobile, isTablet, optimizeForMobile, preloadCriticalResources, lazyLoadImages]);
 
   // Initialize Three.js background
   useEffect(() => {
@@ -789,7 +805,11 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Enhanced Navigation Bar */}
-      <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      {isMobile || isTablet ? (
+        <MobileOptimizedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      ) : (
+        <EnhancedHeader transparent={true} isLoggedIn={false} onLoginClick={handleLoginClick} />
+      )}
 
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection onScrollToFeatures={scrollToFeatures} />

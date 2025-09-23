@@ -1,29 +1,56 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useMobileView } from '../hooks/useMobileView';
+import { useMobileNavigation } from '../hooks/useMobileNavigation';
+import { useMobileGestures } from '../hooks/useMobileGestures';
 
-interface EnhancedHeaderProps {
+interface MobileOptimizedHeaderProps {
   className?: string;
   transparent?: boolean;
   isLoggedIn?: boolean;
   onLoginClick?: () => void;
 }
 
-const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
+const MobileOptimizedHeader: React.FC<MobileOptimizedHeaderProps> = ({
   className = "",
   transparent = true,
   isLoggedIn = false,
   onLoginClick
 }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
   const router = useRouter();
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { isMobile, isTablet, touchDevice, screenWidth } = useMobileView();
+  const {
+    isMenuOpen,
+    isDropdownOpen,
+    activeDropdown,
+    isScrolling,
+    scrollDirection,
+    toggleMenu,
+    closeMenu,
+    toggleDropdown,
+    closeDropdown,
+    handleNavigation,
+    handleScrollToSection,
+    handleBackToTop,
+  } = useMobileNavigation();
+
+  // Gesture handling for swipe to close menu
+  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useMobileGestures({
+    onSwipeLeft: () => {
+      if (isMenuOpen) closeMenu();
+    },
+    onSwipeRight: () => {
+      if (!isMenuOpen) toggleMenu();
+    },
+    swipeThreshold: 50,
+  });
+
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -32,37 +59,8 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
       setIsScrolled(scrollTop > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsSolutionsOpen(false);
-      }
-    };
-
-    const handleMobileMenuClickOutside = (event: MouseEvent) => {
-      const mobileMenuButton = document.querySelector('[data-mobile-menu-button]');
-      const mobileMenu = document.querySelector('[data-mobile-menu]');
-      
-      if (mobileMenuButton && mobileMenu && 
-          !mobileMenuButton.contains(event.target as Node) && 
-          !mobileMenu.contains(event.target as Node)) {
-        setIsMobileMenuOpen(false);
-        setIsSolutionsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('mousedown', handleMobileMenuClickOutside);
-    
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('mousedown', handleMobileMenuClickOutside);
-    };
   }, []);
 
   const navigationItems = [
@@ -79,16 +77,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
     {
       label: 'Our Expertise',
       href: '#expertise-section',
-      onClick: () => {
-        if (window.location.pathname === '/') {
-          const expertiseSection = document.getElementById('expertise-section');
-          if (expertiseSection) {
-            expertiseSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        } else {
-          router.push('/#expertise-section');
-        }
-      }
+      onClick: () => handleScrollToSection('expertise-section')
     },
     {
       label: 'Contact Us',
@@ -99,11 +88,13 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
   const mobileMenuVariants = {
     hidden: {
       opacity: 0,
-      height: 0
+      height: 0,
+      y: -20
     },
     visible: {
       opacity: 1,
-      height: "auto"
+      height: "auto",
+      y: 0
     }
   };
 
@@ -111,7 +102,11 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
     hidden: { opacity: 0, y: -20 },
     visible: (i: number) => ({
       opacity: 1,
-      y: 0
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.3
+      }
     })
   };
 
@@ -128,26 +123,26 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             : 'bg-black'
       } ${className}`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-3 cursor-pointer"
+            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer"
             onClick={() => router.push('/')}
           >
-            <div className="w-12 h-12 relative">
+            <div className="w-8 h-8 sm:w-12 sm:h-12 relative">
               <Image
                 src="/yaaralogo-circle.png"
                 alt="YAARALABS Logo"
                 fill
                 className="object-contain"
                 priority
-                sizes="48px"
+                sizes="(max-width: 640px) 32px, 48px"
               />
             </div>
-            <span className="text-white font-bold text-xl">YAARALABS</span>
+            <span className="text-white font-bold text-lg sm:text-xl">YAARALABS</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -155,16 +150,16 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             {navigationItems.map((item, index) => (
               <div key={item.label} className="relative">
                 {item.hasDropdown ? (
-                  <div ref={dropdownRef} className="relative">
+                  <div className="relative">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex items-center space-x-1 text-white hover:text-purple-400 transition-colors duration-300 py-2"
-                      onClick={() => setIsSolutionsOpen(!isSolutionsOpen)}
+                      onClick={() => toggleDropdown(item.label)}
                     >
                       <span>{item.label}</span>
                       <motion.div
-                        animate={{ rotate: isSolutionsOpen ? 180 : 0 }}
+                        animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
                         transition={{ duration: 0.2 }}
                       >
                         <ChevronDown className="w-4 h-4" />
@@ -172,7 +167,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                     </motion.button>
                     
                     <AnimatePresence>
-                      {isSolutionsOpen && (
+                      {activeDropdown === item.label && (
                         <motion.div
                           initial={{ opacity: 0, y: -10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -185,10 +180,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                               key={dropdownItem.label}
                               whileHover={{ x: 5, backgroundColor: 'rgba(147, 51, 234, 0.1)' }}
                               className="block w-full text-left px-4 py-3 text-white hover:text-purple-400 transition-all duration-200"
-                              onClick={() => {
-                                router.push(dropdownItem.href);
-                                setIsSolutionsOpen(false);
-                              }}
+                              onClick={() => handleNavigation(dropdownItem.href)}
                             >
                               {dropdownItem.label}
                             </motion.button>
@@ -202,7 +194,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="text-white hover:text-purple-400 transition-colors duration-300 py-2 relative group"
-                    onClick={item.onClick || (() => router.push(item.href || '/'))}
+                    onClick={() => item.onClick ? item.onClick() : handleNavigation(item.href || '/')}
                   >
                     {item.label}
                     <motion.div
@@ -221,7 +213,7 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(185, 10, 189, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+              className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-sm sm:text-base"
               onClick={onLoginClick}
             >
               Get AI Assessment
@@ -234,20 +226,18 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
             whileTap={{ scale: 0.9 }}
             className="lg:hidden text-white p-2"
             data-mobile-menu-button
-            onClick={() => {
-              setIsMobileMenuOpen(!isMobileMenuOpen);
-              if (isMobileMenuOpen) {
-                setIsSolutionsOpen(false);
-              }
-            }}
+            onClick={toggleMenu}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </motion.button>
         </div>
 
         {/* Mobile Menu */}
         <AnimatePresence>
-          {isMobileMenuOpen && (
+          {isMenuOpen && (
             <motion.div
               variants={mobileMenuVariants}
               initial="hidden"
@@ -255,8 +245,11 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
               exit="hidden"
               className="lg:hidden mt-4 overflow-hidden"
               data-mobile-menu
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700 relative z-50">
+              <div className="bg-gray-800/95 backdrop-blur-md rounded-lg p-4 space-y-4 border border-gray-700">
                 {navigationItems.map((item, index) => (
                   <motion.div
                     key={item.label}
@@ -269,43 +262,23 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                     {item.hasDropdown ? (
                       <div>
                         <button
-                          className="flex items-center justify-between w-full text-white py-2"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            console.log('Mobile Solutions button clicked, current state:', isSolutionsOpen);
-                            setIsSolutionsOpen(!isSolutionsOpen);
-                          }}
+                          className="flex items-center justify-between w-full text-white py-3 px-2 rounded transition-colors hover:bg-gray-700"
+                          onClick={() => toggleDropdown(item.label)}
+                          onTouchStart={handleTouchStart}
+                          onTouchEnd={handleTouchEnd}
                         >
                           <span>{item.label}</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${isSolutionsOpen ? 'rotate-180' : ''}`} />
+                          <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} />
                         </button>
-                        {isSolutionsOpen && (
+                        {activeDropdown === item.label && (
                           <div className="ml-4 mt-2 space-y-2 relative z-50">
                             {item.dropdownItems?.map((dropdownItem) => (
                               <button
                                 key={dropdownItem.label}
                                 className="block w-full text-left text-gray-300 hover:text-purple-400 py-2 px-2 rounded transition-colors"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  console.log('Mobile dropdown clicked:', dropdownItem.label, dropdownItem.href);
-                                  
-                                  // Close menus first
-                                  setIsSolutionsOpen(false);
-                                  setIsMobileMenuOpen(false);
-                                  
-                                  // Add a small delay to ensure state updates are processed
-                                  setTimeout(() => {
-                                    // Try router.push first, with fallback to window.location
-                                    try {
-                                      router.push(dropdownItem.href);
-                                    } catch (error) {
-                                      console.error('Router push failed, using window.location:', error);
-                                      window.location.href = dropdownItem.href;
-                                    }
-                                  }, 100);
-                                }}
+                                onClick={() => handleNavigation(dropdownItem.href)}
+                                onTouchStart={handleTouchStart}
+                                onTouchEnd={handleTouchEnd}
                               >
                                 {dropdownItem.label}
                               </button>
@@ -315,12 +288,12 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                       </div>
                     ) : (
                       <button
-                        className="block w-full text-left text-white hover:text-purple-400 py-2"
+                        className="block w-full text-left text-white hover:text-purple-400 py-3 px-2 rounded transition-colors"
                         onClick={() => {
-                          item.onClick?.();
-                          setIsMobileMenuOpen(false);
-                          setIsSolutionsOpen(false);
+                          item.onClick ? item.onClick() : handleNavigation(item.href || '/');
                         }}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}
                       >
                         {item.label}
                       </button>
@@ -337,9 +310,10 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
                   className="w-full px-4 py-3 rounded-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-600 text-white mt-4"
                   onClick={() => {
                     onLoginClick?.();
-                    setIsMobileMenuOpen(false);
-                    setIsSolutionsOpen(false);
+                    closeMenu();
                   }}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
                 >
                   Get AI Assessment
                 </motion.button>
@@ -352,4 +326,4 @@ const EnhancedHeader: React.FC<EnhancedHeaderProps> = ({
   );
 };
 
-export { EnhancedHeader };
+export { MobileOptimizedHeader };
